@@ -1,0 +1,387 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.2
+-- Dumped by pg_dump version 11.2
+
+-- Started on 2019-11-27 22:11:56
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 197 (class 1259 OID 1976066)
+-- Name: cliente; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.cliente (
+    id integer NOT NULL,
+    nome character varying(50) NOT NULL,
+    endereco character varying(50),
+    cpf character varying(15),
+    telefone character varying(20),
+    aniversario character varying(12)
+);
+
+
+ALTER TABLE public.cliente OWNER TO postgres;
+
+--
+-- TOC entry 196 (class 1259 OID 1976064)
+-- Name: cliente_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.cliente_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cliente_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2215 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: cliente_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.cliente_id_seq OWNED BY public.cliente.id;
+
+
+--
+-- TOC entry 201 (class 1259 OID 1976082)
+-- Name: comissao; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.comissao (
+    id integer NOT NULL,
+    data character varying(12),
+    valor double precision NOT NULL,
+    idvendedor integer
+);
+
+
+ALTER TABLE public.comissao OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 1976080)
+-- Name: comissao_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.comissao_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.comissao_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2216 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: comissao_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.comissao_id_seq OWNED BY public.comissao.id;
+
+
+--
+-- TOC entry 206 (class 1259 OID 1976119)
+-- Name: itensvenda; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.itensvenda (
+    idvenda integer NOT NULL,
+    idproduto integer NOT NULL,
+    quantidade integer,
+    totalitem double precision
+);
+
+
+ALTER TABLE public.itensvenda OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 1976095)
+-- Name: produto; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.produto (
+    id integer NOT NULL,
+    descricao character varying(50) NOT NULL,
+    preco double precision
+);
+
+
+ALTER TABLE public.produto OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 1976093)
+-- Name: produto_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.produto_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.produto_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2217 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: produto_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.produto_id_seq OWNED BY public.produto.id;
+
+
+--
+-- TOC entry 205 (class 1259 OID 1976103)
+-- Name: venda; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.venda (
+    id integer NOT NULL,
+    valortotal double precision,
+    data character varying(12),
+    idcliente integer,
+    idvendedor integer
+);
+
+
+ALTER TABLE public.venda OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 1976101)
+-- Name: venda_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.venda_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.venda_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2218 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: venda_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.venda_id_seq OWNED BY public.venda.id;
+
+
+--
+-- TOC entry 199 (class 1259 OID 1976074)
+-- Name: vendedor; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.vendedor (
+    id integer NOT NULL,
+    nome character varying(50) NOT NULL,
+    endereco character varying(50),
+    cpf character varying(15),
+    salario double precision,
+    percentual double precision
+);
+
+
+ALTER TABLE public.vendedor OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 1976072)
+-- Name: vendedor_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.vendedor_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.vendedor_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2219 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: vendedor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.vendedor_id_seq OWNED BY public.vendedor.id;
+
+
+--
+-- TOC entry 2067 (class 2604 OID 1976069)
+-- Name: cliente id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cliente ALTER COLUMN id SET DEFAULT nextval('public.cliente_id_seq'::regclass);
+
+
+--
+-- TOC entry 2069 (class 2604 OID 1976085)
+-- Name: comissao id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.comissao ALTER COLUMN id SET DEFAULT nextval('public.comissao_id_seq'::regclass);
+
+
+--
+-- TOC entry 2070 (class 2604 OID 1976098)
+-- Name: produto id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.produto ALTER COLUMN id SET DEFAULT nextval('public.produto_id_seq'::regclass);
+
+
+--
+-- TOC entry 2071 (class 2604 OID 1976106)
+-- Name: venda id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.venda ALTER COLUMN id SET DEFAULT nextval('public.venda_id_seq'::regclass);
+
+
+--
+-- TOC entry 2068 (class 2604 OID 1976077)
+-- Name: vendedor id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vendedor ALTER COLUMN id SET DEFAULT nextval('public.vendedor_id_seq'::regclass);
+
+
+--
+-- TOC entry 2073 (class 2606 OID 1976071)
+-- Name: cliente cliente_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cliente
+    ADD CONSTRAINT cliente_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2077 (class 2606 OID 1976087)
+-- Name: comissao comissao_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.comissao
+    ADD CONSTRAINT comissao_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2083 (class 2606 OID 1976123)
+-- Name: itensvenda itensvenda_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.itensvenda
+    ADD CONSTRAINT itensvenda_pkey PRIMARY KEY (idvenda, idproduto);
+
+
+--
+-- TOC entry 2079 (class 2606 OID 1976100)
+-- Name: produto produto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.produto
+    ADD CONSTRAINT produto_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2081 (class 2606 OID 1976108)
+-- Name: venda venda_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.venda
+    ADD CONSTRAINT venda_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2075 (class 2606 OID 1976079)
+-- Name: vendedor vendedor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vendedor
+    ADD CONSTRAINT vendedor_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2084 (class 2606 OID 1976088)
+-- Name: comissao comissao_idvendedor_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.comissao
+    ADD CONSTRAINT comissao_idvendedor_fkey FOREIGN KEY (idvendedor) REFERENCES public.vendedor(id) ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2088 (class 2606 OID 1976129)
+-- Name: itensvenda itensvenda_idproduto_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.itensvenda
+    ADD CONSTRAINT itensvenda_idproduto_fkey FOREIGN KEY (idproduto) REFERENCES public.produto(id) ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2087 (class 2606 OID 1976124)
+-- Name: itensvenda itensvenda_idvenda_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.itensvenda
+    ADD CONSTRAINT itensvenda_idvenda_fkey FOREIGN KEY (idvenda) REFERENCES public.venda(id) ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2085 (class 2606 OID 1976109)
+-- Name: venda venda_idcliente_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.venda
+    ADD CONSTRAINT venda_idcliente_fkey FOREIGN KEY (idcliente) REFERENCES public.cliente(id) ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2086 (class 2606 OID 1976114)
+-- Name: venda venda_idvendedor_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.venda
+    ADD CONSTRAINT venda_idvendedor_fkey FOREIGN KEY (idvendedor) REFERENCES public.vendedor(id) ON DELETE RESTRICT;
+
+
+-- Completed on 2019-11-27 22:11:59
+
+--
+-- PostgreSQL database dump complete
+--
+
