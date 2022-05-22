@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="container is-max-desktop">
+            <form action="#" th:action="@{/storepost}" th:object="${post}" method="post">
+                <div class="field">
+                    <label class="label">Title</label>
+                    <div class="control">
+                      <input type="text" th:field="*{title}" class="input" id="title" placeholder="Title">
+                      <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="help is-danger"></span>
+                    </div>
+                </div>
+                  
+                <div class="field">
+                    <label class="label">Description</label>
+                    <div class="control">
+                        <input th:field="*{description}" class="input" id="description" type="text" placeholder="Description">
+                        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="help is-danger"></span>
+                    </div>
+                </div>
+                  
+                <div class="field">
+                    <label class="label">Texto</label>
+                    <div class="control">
+                        <textarea th:field="*{text}" class="textarea" id="text" placeholder="Textarea"></textarea>
+                        <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}" class="help is-danger"></span>
+                    </div>
+                </div>                  
+                  
+                <div class="field is-grouped">
+                    <div class="control">
+                      <button class="button is-link" type="submit">Submit</button>
+                    </div>
+                    <div class="control">
+                      <a class="button is-link is-light" href="/index">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
