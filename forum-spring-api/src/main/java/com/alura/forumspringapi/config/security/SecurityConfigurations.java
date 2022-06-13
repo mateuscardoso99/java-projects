@@ -1,14 +1,20 @@
 package com.alura.forumspringapi.config.security;
 
+import com.alura.forumspringapi.repository.UsuarioRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity //habilita modulo de segurança
 @Configuration //quando o spring iniciar vai ler o que está nessa classe por causa dessa anotação
@@ -16,6 +22,25 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
     
     @Autowired
     private AutenticacaoService autenticacaoService;
+
+    @Autowired
+    private TokenService tokenService;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+
+    /**
+     * A classe AuthenticationManager deve ser utilizada apenas na lógica de autenticação 
+     * via username/password, para a geração do token.
+     * precisa do override aqui para usar no autenticacao controller
+     */
+
+    @Override
+    @Bean
+    protected AuthenticationManager authenticationManager() throws Exception{
+        return super.authenticationManager();
+    }
      
     //configurações de autenticação, parte de controle de acesso, login.
     @Override
@@ -31,8 +56,13 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
         http.authorizeHttpRequests()
         .antMatchers(HttpMethod.GET,"/topicos").permitAll()
         .antMatchers(HttpMethod.GET,"/topicos/*").permitAll()
+        .antMatchers(HttpMethod.POST,"/auth").permitAll()
         .anyRequest().authenticated()
-        .and().formLogin();
+        //.and().formLogin() //como é uma api não terá sessão e esse metodo cria uma sessão, um form de login e um controller prontos, então será preciso criar um controller de autenticação
+        .and().csrf().disable() //por ser uma api ela não é vulneravel a ataques csrf, por é desativado para não verificar o cookie csrf também
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //autenticação será por token e não stateless então o servidor não vai guardar na sua memoria os dados da sessão do usuario
+        .and().addFilterBefore(new AutenticacaoTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
+        //dizendo qual é a classe de filtro e o tipo do token
 
         /**
          * http.authorizeRequests() é o método que vamos precisar chamar para configurar 
