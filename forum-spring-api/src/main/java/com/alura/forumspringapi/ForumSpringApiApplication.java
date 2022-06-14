@@ -10,6 +10,7 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 @SpringBootApplication
 @EnableSpringDataWebSupport //habilita para pegar os dados do objeto de paginação recebido no método lista do topicoController e repassar pro jpa
 @EnableCaching //habilitando cache, usar redis em produção ou outro gerenciador, No geral, utilizamos cache naquelas tabelas que nunca ou raramente são atualizadas
+//@EnableSwagger2
 public class ForumSpringApiApplication {
 
 	public static void main(String[] args) {

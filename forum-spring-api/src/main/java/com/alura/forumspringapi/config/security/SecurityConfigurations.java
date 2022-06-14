@@ -57,12 +57,13 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
         .antMatchers(HttpMethod.GET,"/topicos").permitAll()
         .antMatchers(HttpMethod.GET,"/topicos/*").permitAll()
         .antMatchers(HttpMethod.POST,"/auth").permitAll()
-        .anyRequest().authenticated()
+        .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()//rota para o actuator(monitora a api, (infos sobre estado, disco, bd, hd etc..)) /actuator/qualquer-coisa, (nãO deve ser público porque retorna informações sensiveis)
+        //spring boot admin: ferramenta que monitora uma aplicação spring, cria um projeto spring que monitora outros projetos spring
+        .anyRequest().authenticated()//qualquer outra rota fora dessas decima exige autenticação
         //.and().formLogin() //como é uma api não terá sessão e esse metodo cria uma sessão, um form de login e um controller prontos, então será preciso criar um controller de autenticação
         .and().csrf().disable() //por ser uma api ela não é vulneravel a ataques csrf, por é desativado para não verificar o cookie csrf também
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //autenticação será por token e não stateless então o servidor não vai guardar na sua memoria os dados da sessão do usuario
-        .and().addFilterBefore(new AutenticacaoTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
-        //dizendo qual é a classe de filtro e o tipo do token
+        .and().addFilterBefore(new AutenticacaoTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class); //dizendo qual é a classe de filtro e o tipo do token
 
         /**
          * http.authorizeRequests() é o método que vamos precisar chamar para configurar 
@@ -88,5 +89,8 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
     //que o frontend está integrado, iríamos ensinar para o Spring que as requisições 
     //devem ser ignoradas, que não é para interceptar na parte de segurança
     @Override
-    public void configure(WebSecurity web) throws Exception {}
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**","/configuration/**", "/swagger-resources/**");
+        //swagger gera um html com a documentação e é preciso informar ao spring para não interceptar
+    }
 }
