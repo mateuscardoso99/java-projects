@@ -4,6 +4,8 @@ public class Main{
     public static void main(String[] args) {
         //int[] vet = new int[10];
         int vet[] = new int[10];//outra forma de declarar
+        char[] array = {'S','i','l','v','a'};//pode ser declarado assim, mas desde que seja inicializado
+        
         Scanner scanner = new Scanner(System.in);
 
         for(int i=0;i<vet.length;i++){     
