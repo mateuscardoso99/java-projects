@@ -50,5 +50,20 @@ public class gerenciaString {
         System.out.println("número de ocorrências da letra E: "+g.ocorrencias("televisão", 'e'));
     }
     
+    /*
+    String str = "abc";
+    é equivalente a:
+    
+    char[] data = {'a', 'b', 'c'};
+    String str = new String(data);
+    
+    StringBuilder:
+    StringBuilder sb1 = new StringBuilder();
+    quando se concatena um variavel da classe String um novo hashcode é gerado após a concatenação,
+    um novo objeto String é criado com valores atualizados e o objeto antigo foi desreferenciado
+    sendo mais lento que a classe StringBuilder, pois valores da classe String são imutáveis
+    já StringBuilder permite mudanças e não recria a variável, sendo mais indicada quando for fazer concatenações
+    */
+    
     
 }
