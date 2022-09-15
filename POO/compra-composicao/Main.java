@@ -1,3 +1,6 @@
+//composição: relação todo/parte, o objeto pai é reponsável pela crição e destruição de suas partes
+//usa-se quando uma classe não faz sentido sem a outra ex: produto e característica
+
 public class Main{
     public static void main(String[] args) {
         Pessoa p1 = new Pessoa("joao", "233", "rua a", "caxias", "rs");
