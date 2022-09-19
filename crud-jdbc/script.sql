@@ -1,0 +1,15 @@
+CREATE TABLE edicoes(
+    id SERIAL PRIMARY KEY,
+    numEdicao INTEGER NOT NULL,
+    dataEdicao DATE NOT NULL,
+    numArtigos INT NOT NULL
+);
+
+CREATE TABLE revista(
+    id SERIAL PRIMARY KEY,
+    codigo INTEGER NOT NULL,
+    titulo VARCHAR(100) NOT NULL,
+    tipo VARCHAR(100) NOT NULL,
+    idEdicao INTEGER NOT NULL,
+    FOREIGN KEY (idEdicao) REFERENCES edicoes (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
