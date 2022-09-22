@@ -38,5 +38,6 @@ public class Main{
         Edicao.update(e1, e1.getId());
         
         r1.delete(r1.getId());
+        r2.delete(30);
     }
 }
