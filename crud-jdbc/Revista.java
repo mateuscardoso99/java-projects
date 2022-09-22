@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Revista {
     private int id;
@@ -67,25 +68,40 @@ public class Revista {
         this.edicao = e;
     }
 
-    public boolean getRevista(int id){
+    public Optional<Revista> getRevista(int id){
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try{
-            stmt = con.prepareStatement("SELECT * FROM revista WHERE id = ?;");
+            stmt = con.prepareStatement("SELECT revista.*, edicoes.id as eid, edicoes.numedicao, edicoes.dataedicao, edicoes.numartigos FROM revista JOIN edicoes ON revista.idedicao = edicoes.id WHERE revista.id = ?;");
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
 
             if(rs.next()){
-                return true;
+                Edicao ed = new Edicao(
+                    rs.getInt("eid"),
+                    rs.getInt("numedicao"),
+                    rs.getDate("dataedicao").toLocalDate(),
+                    rs.getInt("numartigos")
+                );
+
+                Revista r = new Revista(
+                    rs.getInt("id"),
+                    rs.getInt("codigo"),
+                    rs.getString("titulo"),
+                    rs.getString("tipo"), 
+                    ed
+                );
+
+                return Optional.of(r);
             }
             else{
-                return false;
+                return null;
             }
         }catch(SQLException exception){
             exception.printStackTrace();
-            return false;
+            return null;
         }finally{
             Conexao.closeConnection(con, stmt);
         }
@@ -163,7 +179,7 @@ public class Revista {
         PreparedStatement stmt = null;
 
         try{
-            if(this.getRevista(id)){
+            if(this.getRevista(id) != null){
                 stmt = con.prepareStatement("DELETE FROM revista WHERE id = ?;");
                 stmt.setInt(1, id);
                 int success = stmt.executeUpdate();
