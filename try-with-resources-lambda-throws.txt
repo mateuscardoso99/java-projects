@@ -1,0 +1,128 @@
+TRY WITH RESOURCES:
+
+Abrir e fechar recursos no Java, até o Java 6, era uma tarefa muito tediosa de se fazer e muito propensa a erros. 
+Fechar os recursos abertos (invocando o método close()) frequentemente é algo que ou acaba sendo esquecido de ser feito ou que o 
+programador o faz de forma inadequada, pois há vários complicadores para se fazer isso.
+
+Por exemplo, veja este código:
+
+public static void localizarAlunos(String turma) throws ConexaoFalhouException {
+        Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            c = Conexao.obter();
+            ps = c.prepareStatement(SQL_ALUNOS_POR_TURMA);
+            ps.setString(1, turma);
+            rs = ps.executeQuery();
+
+            List<Aluno> alunos = new ArrayList<Aluno>();
+            while (rs.next()) {
+                Aluno a = new Aluno();
+                a.setInt(rs.getInt(1));
+                a.setNome(rs.getString(2));
+                a.setTelefone(rs.getString(3));
+                alunos.add(a);
+            }
+
+            return alunos;
+        } catch (SQLException e) {
+            throw new ConexaoFalhouException(e);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (c != null) c.close();
+            } catch (SQLException e) {
+                throw new ConexaoFalhouException(e);
+            }
+        }
+    }
+}
+
+
+Este é o código que um programador experiente em Java 6 tipicamente escreveria. Apesar de tudo, ainda há umas coisas chatas nele:
+
+O programador sempre tem que ter o cuidado de se lembrar de chamar o close() manualmente.
+
+Se o programador não usar o bloco try-finally, colocando o close() no finally, o recurso ficará aberto se uma exceção for lançada.
+
+Se o programador se esquecer de usar os ifs no bloco finally, ele pode ter um NullPointerException como resultado.
+
+Se um dos métodos close() do bloco finally lançar uma exceção, os demais recursos não serão fechados adequadamente, a menos que cada um deles esteja isolado dentro do seu próprio finally.
+
+Se um dos métodos close() do bloco finally lançar uma exceção, essa exceção vai ser lançada e vai esconder qualquer exceção lançada no bloco try.
+
+Os métodos close() forçam você colocar um outro bloco try-catch dentro do bloco finally, mesmo já tendo um bloco catch (SQLException e) antes do finally, tendo que então duplicar o bloco catch. Isso é contornável ao se usar um bloco try-finally dentro do try-catch, mas mesmo assim, qualquer solução desse tipo é mais complicada do que o que deveria ser.
+
+Esses problemas aí mostram que mesmo seguindo as melhores práticas, o código resultante ainda é bastante feio, confuso, propenso a erros, polui a lógica de negócio e é fácil de quebrar. E grande quantidade desse código é dedicado a lidar com a forma adequada de fechar o recurso prevendo todos os casos especiais possíveis que muitas vezes acaba ficando maior do que a parte que usa o recurso para fazer algum trabalho útil.
+
+Pensando-se nesse problema, é que a sintaxe do try-with-resources foi concebida. A finalidade dessa sintaxe é exatamente a de livrar o programador da necessidade e da complexidade de fechar explicitamente os recursos abertos, além de lidar com todos esses casos especiais automaticamente sem que o programador precise se preocupar com eles.
+
+Eis como fica o mesmo código usando o try-with-resources:
+
+public class ConexaoFalhouException extends Exception {
+    public ConexaoFalhouException(Throwable cause) {
+        super(cause);
+    }
+}
+public class AlunoDAO {
+
+    private static final String SQL_ALUNOS_POR_TURMA = 
+            "SELECT id, nome, telefone FROM alunos WHERE id_turma = ?";
+
+    public static void localizarAlunos(String turma) throws ConexaoFalhouException {
+        try (
+            Connection c = Conexao.obter();
+            PreparedStatement ps = c.prepareStatement(SQL_ALUNOS_POR_TURMA);
+        ) {
+            ps.setString(1, turma);
+            try (ResultSet rs = ps.executeQuery()) {
+
+                List<Aluno> alunos = new ArrayList<>();
+                while (rs.next()) {
+                    Aluno a = new Aluno();
+                    a.setInt(rs.getInt(1));
+                    a.setNome(rs.getString(2));
+                    a.setTelefone(rs.getString(3));
+                    alunos.add(a);
+                }
+
+                return alunos;
+            }
+        } catch (SQLException e) {
+            throw new ConexaoFalhouException(e);
+        }
+    }
+}
+
+Observe que usando o try-with-resources, não é mais necessário colocar-se um bloco finally para se fechar os recursos e nem mesmo chamar o método close() e 
+você não precisa mais codificar toda essa parafernália. Um bloco finally adequado é acrescentado automagicamente pelo compilador, e ele já sabe lidar com 
+todos os casos bizarros citados acima. Note também que apenas um catch (SQLException e) é necessário.
+
+A sintaxe do try-with-resources é assim:
+
+1-A palavra-chave try
+2-Um abre parênteses (.
+3-Uma ou mais declarações de recursos separadas/terminadas por ponto-e-vírgula.
+4-Um fecha parênteses ).
+5-Um abre chaves {.
+6-Várias instruções que são executadas dentro do bloco try.
+7-Um fecha chaves }.
+8-Opcionalmente um ou mais blocos catch.
+9-Opcionalmente um bloco finally.
+
+
+
+LAMBDA:
+O código (s1, s2)->Integer.compare(s1.length(),l2.length()), gerará uma instância de Comparator que o compare	devolve	Integer.compare(s1.length,l2.length).
+Até mesmo o return não é necessário, já que só temos uma instrução após o ->. Esse é o recurso de lambda do Java8.
+
+THROwS:
+quando um método tem na sua declaração throws significa que o método que o chamar será responsável pelo tratamento da exception
+
+public static void metodo() throws java.io.FileNotFoundException {
+	new java.io.FileInputStream("arquivo.txt");
+}
+
