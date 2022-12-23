@@ -1,0 +1,56 @@
+//static blocks:
+
+public class MyStaticVsConstructor {
+ 
+    //Os blocos estáticos Java serão chamados quando a JVM carregar a classe na memória, significa que será chamado apenas uma vez
+    static {
+        System.out.println("I am in static block");
+        System.out.println("Static block will be called first than constructor!!!");
+        System.out.println("Static block will be called only once.");
+    }
+     
+
+    //construtor será chamado toda vez que você criar um objeto
+    public MyStaticVsConstructor(){
+        System.out.println("I am in constructor");
+    }
+     
+    public static void main(String a[]){
+        MyStaticVsConstructor ksv1 = new MyStaticVsConstructor();
+        MyStaticVsConstructor ksv2 = new MyStaticVsConstructor();
+        MyStaticVsConstructor ksv3 = new MyStaticVsConstructor();
+        MyStaticVsConstructor ksv4 = new MyStaticVsConstructor();
+    }
+}
+
+
+//import static:
+
+com a importação estática, podemos acessar os membros estáticos de uma classe diretamente sem o nome da classe ou qualquer objeto.
+Por exemplo: sempre usamos o método sqrt() da classe Math usando a classe Math, ou seja , Math.sqrt() , mas usando a importação estática
+podemos acessar o método sqrt() diretamente
+
+
+// sem import static
+class Geeks {
+    public static void main(String[] args)
+    {
+        System.out.println(Math.sqrt(4));
+        System.out.println(Math.pow(2, 2));
+        System.out.println(Math.abs(6.3));
+    }
+}
+
+
+
+// com import static
+import static java.lang.Math.*;
+
+class Test2 {
+    public static void main(String[] args)
+    {
+        System.out.println(sqrt(4));
+        System.out.println(pow(2, 2));
+        System.out.println(abs(6.3));
+    }
+}
