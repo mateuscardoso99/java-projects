@@ -1,0 +1,6 @@
+com/projeto/servlet/crud/registration/LoginServlet.class
+com/projeto/servlet/crud/connection/ConnectionFactory.class
+com/projeto/servlet/crud/model/User.class
+com/projeto/servlet/crud/registration/RegistrationServlet.class
+com/projeto/servlet/crud/dao/UserDAO.class
+com/projeto/servlet/crud/registration/LogoutServlet.class
