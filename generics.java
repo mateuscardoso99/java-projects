@@ -5,6 +5,10 @@
 
 //Antes do generics:
 //Vamos criar uma classe que recebe um número inteiro e possui um método que retorna o quadrado do número
+
+import java.util.*;
+import java.util.function.Function;
+
 class MinhaClasse {
     public int num;
     
@@ -101,7 +105,7 @@ class MinhaClasse4<T extends Number> { // T agora dá um extends na classe Numbe
  * e se fizermos doubleTipo.saoIguais(), ele esperará um Double. Usando ?, 
  * deixamos claro pro Java que ele pode esperar tanto um inteiro quanto um 
  * double, ou seja: podemos misturar os tipos.
- * se colocasse <T> teria que ser do mesmo tipo do objeto
+ * se colocasse <T> teria que ser do mesmo tipo do objeto 
  */
 
 
@@ -120,5 +124,28 @@ class Main {
         System.out.println(inteiro2.aoQuadrado() + " | " + doubleTipo.aoQuadrado());
         System.out.println(inteiro2.saoIguais(doubleTipo));
     }
+    
+    
+    
+    
+    //SINTAXE MÉTODOS GENÉRICOS
+    //A sintaxe de um método genérico inclui uma lista de parâmetros de tipo, dentro de colchetes angulares, <>
+    //QUE APARECEM ANTES DO TIPO DE RETORNO DO MÉTODO. 
+    //Para métodos genéricos estáticos, a seção de parâmetro de tipo deve aparecer antes do tipo de retorno do método.
+    
+    //o "<T>" antes do tipo de retorno (List<T>) indica o tipo de parâmetros que ele receberá
+    public static <T> List<T> method(T[] a){ return new ArrayList<>(); }
+    
+    //outro exemplo:
+    //<T,G> antes do tipo de retorno indica que os parâmetros recebidos serão do tipo T e G
+    public static <T, G> List<G> fromArrayToList(T[] a, Function<T, G> mapperFunction) { return new ArrayList<>(); }
+ 
+ 
+    //OBS:
+    //A Function Interface faz parte do pacote java.util.function que foi introduzido desde o Java 8, para implementar a programação funcional em Java. 
+    //Representa uma função que recebe um argumento e produz um resultado. Assim, esta interface funcional abrange 2 genéricos, nomeadamente:
+    //T : denota o tipo do argumento de entrada
+    //R : denota o tipo de retorno da função
+    //ex: Function<T,G> recebe um parâmetro do tipo T e o retorno será do tipo G
 }
 
