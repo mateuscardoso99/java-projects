@@ -101,6 +101,7 @@ class MinhaClasse4<T extends Number> { // T agora dá um extends na classe Numbe
  * e se fizermos doubleTipo.saoIguais(), ele esperará um Double. Usando ?, 
  * deixamos claro pro Java que ele pode esperar tanto um inteiro quanto um 
  * double, ou seja: podemos misturar os tipos.
+ * se colocasse <T> teria que ser do mesmo tipo do objeto
  */
 
 
