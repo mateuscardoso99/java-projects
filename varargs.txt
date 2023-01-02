@@ -26,6 +26,27 @@ formatWithVarArgs("a", "b", "c", "d");
 
 Como mencionado anteriormente, varargs são arrays, então precisamos trabalhar com eles da mesma forma que trabalharíamos com um array normal.
 
+acessando parametros:
+public class Main
+{
+    public static void teste(String... values){
+        for(String t : values){
+            System.out.println(t);
+        }
+    }
+	public static void main(String[] args) {
+		teste("r","3","324");
+	}
+}
+
+
+
+
+////////////////////
+
+
+
+
 
 há algumas regras que devemos ter em mente:
 
