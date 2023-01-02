@@ -117,7 +117,7 @@ public class Main
     especifica um nome de parâmetro de tipo, você não pode
     utilizá-lo como um nome de tipo por todo o corpo do
     método (isto é, não pode substituir Number por ? na
-    linha 23).
+    linha 95).
     Você pode, porém, declarar o método sum dessa maneira:
     public static<T extends Number> doublesum (ArrayList< T > list)
     Isso permite ao método receber uma ArrayList que
