@@ -1,0 +1,39 @@
+Varargs fornecem uma abreviação para métodos que suportam um número arbitrário de parâmetros de um tipo
+
+Antes do varargs, sempre que quiséssemos passar um número arbitrário de argumentos, tínhamos que passar todos os argumentos em um array ou implementar N métodos (um para cada parâmetro adicional):
+
+public String format() { ... }
+
+public String format(String value) { ... }
+
+public String format(String val1, String val2) { ... }
+
+
+Uso de Varargs:
+
+Varargs nos ajuda a evitar escrever código clichê introduzindo a nova sintaxe que pode lidar com um número arbitrário de parâmetros automaticamente – usando um array sob o capô.
+
+Podemos defini-los usando uma declaração de tipo padrão, seguida por reticências:
+
+public String formatWithVarArgs(String... values) {
+    // ...
+}
+
+E agora podemos chamar nosso método com um número arbitrário de argumentos, como:
+
+formatWithVarArgs();
+formatWithVarArgs("a", "b", "c", "d");
+
+Como mencionado anteriormente, varargs são arrays, então precisamos trabalhar com eles da mesma forma que trabalharíamos com um array normal.
+
+
+há algumas regras que devemos ter em mente:
+
+- Cada método só pode ter um parâmetro varargs
+- O argumento varargs deve ser o último parâmetro
+
+Simplificando, o uso de varargs é seguro se os usarmos para transferir um número variável de argumentos do chamador para o método e nada mais!, não deve ser retornado esse array
+
+
+
+
