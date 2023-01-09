@@ -114,13 +114,15 @@ class EmpregadoAssalariado extends Empregado{
     
     public EmpregadoAssalariado(String nome, String cpf, float salarioMensal){
         super(nome,cpf);
-        this.salarioMensal = salarioMensal;
+        setSalarioMensal(salarioMensal);
     }
     
-    public float getSalarioMensal(){ return this.salarioMensal; }
-    public void setSalarioMensal(float s) {
-        if(s < 0)
+    private float getSalarioMensal(){ return this.salarioMensal; }
+    private void setSalarioMensal(float s) {
+        if(s < 0){
             this.salarioMensal = 0;
+            return;
+        }
             
         this.salarioMensal = s;
     }
@@ -146,22 +148,26 @@ class EmpregadoComissionado extends Empregado{
     
     public EmpregadoComissionado(String nome, String cpf, float v, float c){
         super(nome,cpf);
-        this.vendaBrutaMensal = v;
-        this.comissao = c;
+        setVendaBrutaMensal(v);
+        setComissao(c);
     }
     
-    public float getVendaBrutaMensal(){ return this.vendaBrutaMensal; }
-    public void setVendaBrutaMensal(float v) {
-        if(v < 0)
+    private float getVendaBrutaMensal(){ return this.vendaBrutaMensal; }
+    private void setVendaBrutaMensal(float v) {
+        if(v < 0){
             this.vendaBrutaMensal = 0;
+            return;
+        }
             
         this.vendaBrutaMensal = v;
     }
     
-    public float getComissao(){ return this.comissao; }
-    public void setComissao(float c) {
-        if(c < 0)
+    private float getComissao(){ return this.comissao; }
+    private void setComissao(float c) {
+        if(c < 0){
             this.comissao = 0;
+            return;
+        }
             
         this.comissao = c;
     }
@@ -180,14 +186,16 @@ class EmpregadoComissionado extends Empregado{
 
 
 class Main {
-    public static void empregados(Empregado empregado){
-        System.out.println(empregado.toString());
+    private static void empregados(Empregado... empregados){
+        //System.out.println(empregado); //empregado ou empregado.toString() gera o mesmo resultado, pois toString é implementado por padrao
+        for(Empregado e : empregados){
+            System.out.println(e);
+        }
     }
     
     public static void main(String[] args) {
-        Empregado ea = new EmpregadoAssalariado("joao","343.254.562-54",2000.00f);
+        Empregado ea = new EmpregadoAssalariado("joao","343.254.562-54",2000.55f);
         Empregado ec = new EmpregadoComissionado("maria","211.532.754-00",2350.00f,3);
-        empregados(ea);
-        empregados(ec);
+        empregados(ea,ec);
     }
 }
