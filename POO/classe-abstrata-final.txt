@@ -7,4 +7,5 @@
 -classe final não pode ter filhos
 -metodo final não pode ser sobrescrito
 -variavel final não pode ser alterada
+-variavel final deve ser inicializada no momento da declaração
 -metodo ou classe que seja final e abstrato ao mesmo tempo não é permitido
