@@ -1,0 +1,8 @@
+-classe abstrata não pode ser instanciada
+-metodo abstrato não pode ter corpo, somente declarado, e as classes filhas o implementam
+-se uma classe tiver um metodo abstrato obrigatoriamente a classe deve ser abstrata
+-uma classe que herda de uma classe abstrata obrigatoriamente deve implementar todos os seus metodos
+
+-classe final não pode ter filhos
+-metodo final não pode ser sobrescrito
+-variavel final não pode ser alterada
