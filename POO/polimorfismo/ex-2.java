@@ -75,5 +75,14 @@ class Gerente extends Funcionario{
         //decidir qual método deve ser chamado, sempre relacionando com sua classe de verdade, e não com a que estamos usando para referenciá-lo
         //Apesar de	estarmos nos referenciando a esse Gerente como sendo um Funcionario, o método executado é o do Gerente
         System.out.println(f3.getBonificacao());
+        
+        /*
+         Funcionario f2 = new Gerente();
+         f2.setNome("carlos");
+         f2.setSalario(3000);
+         
+         VAI SER INVOCADO O METODO DO GERENTE, MESMO QUE f2 SEJA DO TIPO FUNCIONARIO ELE RECEBE
+         UMA INSTANCIA DE GERENTE ENTAO SERÁ CHAMADO O METODO QUE ESTA NA CLASSE GERENTE
+        */
     }
 }
