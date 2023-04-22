@@ -5,7 +5,6 @@ import java.util.concurrent.Semaphore;
 
 public class Monitor {
 
-
     private long i = 0;
     private Object monitor = new Object();//monitor pode ser qualquer objeto, desde que ele seja colocado dentro dos syncronized(){}
 
