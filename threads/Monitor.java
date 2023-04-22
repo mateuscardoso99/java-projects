@@ -3,6 +3,12 @@ package br.ufsm.poli.csi.so.threads;
 import java.util.Objects;
 import java.util.concurrent.Semaphore;
 
+/*
+monitor é um mecanismo para controlar o acesso simultâneo a um objeto
+bloco syncronized impedirá que o outro acesse a região antes que o primeiro termine
+wait() faz a thread esperar e notify() ativa a thread
+*/
+
 public class Monitor {
 
     private long i = 0;
