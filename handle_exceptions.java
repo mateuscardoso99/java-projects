@@ -16,3 +16,8 @@ public void enviar(String texto) throws Exception{
             throw new Exception(ex.getMessage());//será retornada a exception no método que chamou este
         }
 }
+
+//bloco try catch não é preciso, apenas throws exception, pois ele indica que o método que chama deve tratar a exceção
+public void enviar(String texto) throws Exception{
+       //enviar email
+}
