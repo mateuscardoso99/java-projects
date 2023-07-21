@@ -1,5 +1,22 @@
 import java.io.IOException;
 
+/*
+catch (MyException e) {
+    throw new MyException ("Error processing request", e);
+}
+vs:
+catch (MyException e) {
+    throw e;
+}
+A primeira abordagem seria melhor porque você mudaria sua mensagem para uma mais amigável. Talvez você também possa registrá-lo (stacktrace ou qualquer outra coisa ...) antes de jogá-lo novamente
+
+Não vejo sentido em capturar a exceção e lançá-la novamente. Um cenário raro pode ser que você precise executar alguma operação quando a exceção ocorreu, 
+mas ao mesmo tempo relatar a exceção ao chamador para tomar a ação apropriada.
+Se for esse o caso, a primeira abordagem é melhor porque você está apenas lançando a mesma exceção novamente (em vez de criar uma nova vez). 
+A propósito, ambas as abordagens preservarão o rastreamento de pilha , apenas o caso é que a primeira evitará a criação de objetos desnecessários 
+*/
+
+
 
 //quando é dado throw new independente de qual exceção for, todas tem um construtor que pode ser passada uma string com a mensagem de erro
 
