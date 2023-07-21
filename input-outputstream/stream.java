@@ -1,4 +1,8 @@
 /**
+ * Um programa que precise ler algum dado de algum local (uma fonte) precisa de um InputStream ou um Reader, por outro lado um programa que precise escrever um dado em algum local (destino) precisa de um OutputStream ou um Writer
+ * Imagine um Stream como uma conexão com uma fonte ou destino de dados, onde esses dados podem ser passados via byte ou character. Por exemplo, um arquivo de texto pode representar um Stream, onde o seu programa irá ler esse Stream via byte ou character usando InputStream ou algum Reader
+ * Vimos então que o InputStream faz parte da leitura de dados, ou seja, está conectado a alguma fonte de dados: arquivo, conexão de internet, vídeo e etc. O InputStream nos possibilita ler esse Stream em byte, um byte por vez. Acontece que se olharmos na classe InputStream veremos que ela é abstrata e nós somos obrigados a usar alguma outra classe que a implemente para fazer uso dos seus recursos. Algumas delas: FileInputStream, BufferedInputStream, DataInputStream e etc
+ 
  * Um Stream é uma sequência de dados. Em Java, um stream é composto de bytes.
  * Eava usa o conceito de stream para tornar a operação de E/S rápida.
  * Classes Stream (BufferedInputStream, InputStream, FileInputStream, DataInputStream) vs Classes Reader e Writer(Reader, Writer, BufferedReader, BufferedWriter, FileReader, FileWriter):
@@ -31,12 +35,25 @@
  * FileInputStream: obtém bytes de entrada de um arquivo. Ele é usado para ler dados orientados a bytes (fluxos de bytes brutos), como dados de imagem, áudio, vídeo, etc. Você também pode ler dados de fluxo de caracteres. Mas, para ler fluxos de caracteres, é recomendável usar a classe FileReader.
  
  * BufferedOutputStream é usada para armazenar em buffer um fluxo de saída. Ele usa buffer internamente para armazenar dados. Ele adiciona mais eficiência do que gravar dados diretamente em um fluxo (mais rápido que FileOutputStream). Assim, torna o desempenho rápido. Para adicionar o buffer em um OutputStream, use a classe BufferedOutputStream
- * BufferedInputStream: é usada para ler informações do stream . Ele usa internamente o mecanismo de buffer para acelerar o desempenho
+ * BufferedInputStream: é usada para ler informações do stream . Ele usa internamente o mecanismo de buffer para acelerar o desempenho. diferente do FileInputStream, que lê byte a byte, este lê um bloco inteiro de uma só vez, agilizando o processamento de leitura no disco
+   Um exemplo prático: Se o seu arquivo possui 32768 bytes, para que um FileInputStream possa ler ele por completo, ele precisará fazer 32768 chamadas ao Sistema Operacional. Com um BufferedInputStream você precisará de apenas quadro chamadas, isso porque o BufferedInputStream armazena 8192 bytes em um buffer e os utiliza quando precisa. Resumindo, você deve usar o BufferedInputStream como um wrapper para o FileInputStream quando desejar ganhar mais velocidade
+ 
  * SequenceInputStream: é usada para ler dados de vários fluxos . Ele lê os dados sequencialmente (um por um).
  * ByteArrayOutputStream é usada para gravar dados comuns em vários arquivos. Nesse fluxo, os dados são gravados em uma matriz de bytes que pode ser gravada em vários fluxos posteriormente. O ByteArrayOutputStream contém uma cópia dos dados e os encaminha para vários fluxos
  * ByteArrayInputStream é composto por duas palavras: ByteArray e InputStream. Como o nome sugere, ele pode ser usado para ler a matriz de bytes como fluxo de entrada
  * DataOutputStream e DataInputStream: permite que um aplicativo leia e grave tipos de dados Java primitivos no fluxo de saída de maneira independente da máquina.
  * PrintStream: fornece métodos para gravar dados em outro fluxo. A classe PrintStream libera automaticamente os dados, portanto, não há necessidade de chamar o método flush()
+
+
+ * Lembre-se que ao falarmos de “Stream” não estamos tratando especificamente de texto mas qualquer tipo de dado, usamos a leitura de texto apenas para facilitar o entendimento, mas outros métodos poderiam ser utilizados
+ 
+ * flush()
+  Quando alguma escrita é feita em um arquivo em disco, pode ser que este dado ainda não tenha sido de fato escrito no disco, esteja em algum local na memória esperando o momento exato para ser gravado. 
+  O método flush() força que este dado seja escrito imediamente no disco ou em qualquer outro local que você esteja tentando gravar.
+
+ * close()
+  O método close() deve ser chamado para fechar a escrita do arquivo e evitar que este fique aberto. Como várias exeções podem ocorrer durante a escrita do mesmo, e o 
+  fechamento do arquivo deve ser sempre garantido, o ideal é que o close() fique no bloco finally de uma try-catch.
  */
 
 class Teste{
