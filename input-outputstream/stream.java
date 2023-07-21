@@ -50,6 +50,7 @@
  * flush()
   Quando alguma escrita é feita em um arquivo em disco, pode ser que este dado ainda não tenha sido de fato escrito no disco, esteja em algum local na memória esperando o momento exato para ser gravado. 
   O método flush() força que este dado seja escrito imediamente no disco ou em qualquer outro local que você esteja tentando gravar.
+  flush() só existe em OutputStream, e read() só existe em InputStream
 
  * close()
   O método close() deve ser chamado para fechar a escrita do arquivo e evitar que este fique aberto. Como várias exeções podem ocorrer durante a escrita do mesmo, e o 
