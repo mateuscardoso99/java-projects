@@ -1,6 +1,7 @@
 /**
- * Reader e Writer são classes abstratas para leitura e gravação de fluxos de caracteres.
- * 
+ * Reader e Writer são classes abstratas para leitura e gravação de fluxos de caracteres, diferente dos input/outpustream que lê bytes, embora estes possam ser usados para ler caracteres tambem
+ * internamente FileReader usa FileInputStream e FileWriter usa FileOutputStream
+ 
  * FileWriter: é usada para gravar dados orientados a caracteres em um arquivo. É uma classe orientada a caracteres que é usada para manipulação de arquivos em java. Ao contrário da classe FileOutputStream, você não precisa converter string em array de bytes porque fornece método para escrever string diretamente.
  * FileReader: é usada para ler dados do arquivo. Ele retorna dados em formato de byte como a classe FileInputStream.
  * BufferedWriter: é usada para fornecer buffer para instâncias do Writer. Isso torna o desempenho rápido. Ele herda a classe Writer. Os caracteres de buffer são usados ​​para fornecer a gravação eficiente de arrays, caracteres e strings únicos.
