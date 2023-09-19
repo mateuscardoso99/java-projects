@@ -65,7 +65,7 @@ class Pessoa{
 
 class Teste {
     public static void main(String[] args) throws Exception{
-	    Object classe = Class.forName("Pessoa").getDeclaredConstructor().newInstance();//criando instancia de pessoa
+	Object classe = Class.forName("Pessoa").getDeclaredConstructor().newInstance();//criando instancia de pessoa
         Object c2 = Pessoa.class.getDeclaredConstructor().newInstance();//outra forma de instanciar
         
         Pessoa p1 = (Pessoa) c2;
@@ -91,5 +91,5 @@ class Teste {
         }
         Method getNome = p.getClass().getDeclaredMethod("getNome");
         System.out.println(getNome.invoke(p));//executa o método getNome com o novo nome
-	}
+    }
 }
