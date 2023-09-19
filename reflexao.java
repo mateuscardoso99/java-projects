@@ -1,5 +1,6 @@
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 /**
  * Reflection serve para determinar métodos e atributos que serão utilizados de determinada classe (que você nem conhece) em tempo de execução.
@@ -72,14 +73,14 @@ class Teste {
         p1.setIdade(56);
 
         System.out.println(p1.getNome());
-        System.out.println("classe: "+classe.getClass().getName());
+        System.out.println("classe: "+classe.getClass().getName()+", pacote: "+classe.getClass().getPackageName()+", classe mãe: "+classe.getClass().getSuperclass());
         System.out.println("métodos");
         for(Method metodo : classe.getClass().getMethods()){
-            System.out.println("método: "+metodo.getName()+" total de parametros: "+metodo.getParameters().length+" tipo de retorno: "+metodo.getReturnType());
+            System.out.println("método: "+metodo.getName()+", total de parametros: "+metodo.getParameters().length+", tipo de retorno: "+metodo.getReturnType()+", é publico? "+Modifier.isPublic(metodo.getModifiers()));
         }
         System.out.println("atributos");
         for(Field atributo : classe.getClass().getDeclaredFields()){
-            System.out.println("atributo: "+atributo.getName());
+            System.out.println("atributo: "+atributo.getName()+" tipo: "+atributo.getType());
         }
 
         Pessoa p = new Pessoa("joao",35);
