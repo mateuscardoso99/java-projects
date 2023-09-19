@@ -40,7 +40,7 @@
  
  * SequenceInputStream: é usada para ler dados de vários fluxos . Ele lê os dados sequencialmente (um por um).
  * ByteArrayOutputStream é usada para gravar dados comuns em vários arquivos. Nesse fluxo, os dados são gravados em uma matriz de bytes que pode ser gravada em vários fluxos posteriormente. O ByteArrayOutputStream contém uma cópia dos dados e os encaminha para vários fluxos
- * ByteArrayInputStream é composto por duas palavras: ByteArray e InputStream. Como o nome sugere, ele pode ser usado para ler a matriz de bytes como fluxo de entrada
+ * ByteArrayInputStream é composto por duas palavras: ByteArray e InputStream. Como o nome sugere, ele pode ser usado para ler a matriz de bytes como fluxo de entrada, passa um inputStream pra um byte[]
  * DataOutputStream e DataInputStream: permite que um aplicativo leia e grave tipos de dados Java primitivos no fluxo de saída de maneira independente da máquina.
  * PrintStream: fornece métodos para gravar dados em outro fluxo. A classe PrintStream libera automaticamente os dados, portanto, não há necessidade de chamar o método flush()
 
