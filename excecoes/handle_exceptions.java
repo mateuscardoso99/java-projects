@@ -7,7 +7,10 @@ Exemplo: JVM está sem memória. Normalmente, os programas não podem se recuper
 
 //ex: receber exceção lançada no método que foi chamado
 //Exceções verificadas: Uma exceção verificada é uma exceção que é verificada (notificada) pelo compilador em tempo de compilação, também chamada de exceções de tempo de compilação. Essas exceções não podem ser simplesmente ignoradas, o programador deve cuidar (tratar) dessas exceções
+//exemplos: ClassNotFoundException, SQLException, IOException, FileNotFoundException, InstantiationException, InterruptedException
+
 //Exceções não verificadas: Uma exceção não verificada é uma exceção que ocorre no momento da execução. Eles também são chamados de exceções de tempo de execução. Isso inclui bugs de programação, como erros de lógica ou uso indevido de uma API. As exceções de tempo de execução são ignoradas no momento da compilação
+//exemplos: ClassCastException, NullPointerException, ArithmeticException, ArrayIndexOfBoundsException, ArrayStoreException, IllegalThreadStateException
 
 public ResponseEntity<String> enviarEmail(@RequestBody String texto){
        try{
