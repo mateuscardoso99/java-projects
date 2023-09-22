@@ -13,6 +13,46 @@ Exemplo: JVM está sem memória. Normalmente, os programas não podem se recuper
 //exemplos: ClassCastException, NullPointerException, ArithmeticException, ArrayIndexOfBoundsException, ArrayStoreException, IllegalThreadStateException
 
 //LAMBDA FUNCTIONS NÃO PODEM LANÇAR EXCEÇÕES VERIFICADAS DEVE TRATAR ELAS EXPLICITAMENTE OU PASSAR PARA UMA INTERFACE FUNCIONAL QUE A TRATE, SÓ LANÇAM APENAS NÃO VERIFICADAS
+/*
+ex:
+public String encodeAddress(String... values) throws UnsupportedEncodingException {
+        return Arrays.stream(values)
+            .map(s -> URLEncoder.encode(s, "UTF-8")))
+            .collect(Collectors.joining(","));
+}
+não compila pois UnsupportedEncodingException que é uma exceção verificada não é tratada, embora o método use throws quem deveria ter era o map da linha 20
+
+solução:
+public String encodedAddressUsingTryCatch(String... address) {
+    return Arrays.stream(address)
+                .map(s -> {
+                    try {
+                        return URLEncoder.encode(s, "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.joining(","));
+}
+outra solução:
+private String encodeString(String s) {
+    try {
+        return URLEncoder.encode(s, "UTF-8");
+    } catch (UnsupportedEncodingException e) {
+        e.printStackTrace();
+    }
+    return s;
+}
+
+public String encodedAddressUsingExtractedMethod(String... address) {
+    return Arrays.stream(address)
+            .map(this::encodeString)
+            .collect(Collectors.joining(","));
+}
+
+*/
+
+//O compilador exige que você se prepare para exceções verificadas, seja com bloco try/catch ou com throws, para exceções não verificadas isso não é preciso;
 
 public ResponseEntity<String> enviarEmail(@RequestBody String texto){
        try{
