@@ -12,6 +12,8 @@ Exemplo: JVM está sem memória. Normalmente, os programas não podem se recuper
 //Exceções não verificadas: Uma exceção não verificada é uma exceção que ocorre no momento da execução. Eles também são chamados de exceções de tempo de execução. Isso inclui bugs de programação, como erros de lógica ou uso indevido de uma API. As exceções de tempo de execução são ignoradas no momento da compilação
 //exemplos: ClassCastException, NullPointerException, ArithmeticException, ArrayIndexOfBoundsException, ArrayStoreException, IllegalThreadStateException
 
+//LAMBDA FUNCTIONS NÃO PODEM LANÇAR EXCEÇÕES VERIFICADAS DEVE TRATAR ELAS EXPLICITAMENTE OU PASSAR PARA UMA INTERFACE FUNCIONAL QUE A TRATE, SÓ LANÇAM APENAS NÃO VERIFICADAS
+
 public ResponseEntity<String> enviarEmail(@RequestBody String texto){
        try{
             enviarEmailService.enviar(texto);//se acontecer uma exceção no método abaixo, cai no catch
