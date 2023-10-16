@@ -5,6 +5,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+//se o DatagramSocket vai apenas enviar pacotes não precisa colocar a porta nem o ip no construtor
+//apenas se vai receber pacotes
 class cliente {
     public static void main(String[] args) throws IOException{
         DatagramSocket socket = new DatagramSocket(8081,InetAddress.getByName("localhost"));
