@@ -7,6 +7,8 @@ import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 
 //udp: não é orientado a conexão (não é feita uma conexão prévia (handshake)), apenas envia o pacote sem garantia de entrega
+//no upd todos os paoctes são recebidos por um único socket ao contrario do TCP que existe um socket pra cada conexão
+//o udp diferencia os remetentes dos pacotes pelo IP
 class server {
     public static void main(String[] args) throws IOException{
         DatagramSocket serverSocket = new DatagramSocket(8080);
