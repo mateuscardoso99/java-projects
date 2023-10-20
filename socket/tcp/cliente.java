@@ -10,12 +10,12 @@ import java.nio.charset.StandardCharsets;
 class Cliente{
     public static void main(String[] args) throws IOException{
         // //while(true){
-        Socket conexao = new Socket();
+        Socket conexao = new Socket();//cria uma conexão com o servidor
         conexao.connect(new InetSocketAddress("localhost", 8081));
-        conexao.getOutputStream().write("PING".getBytes());
+        conexao.getOutputStream().write("PING".getBytes());//envia dados pro servidor
 
         byte[] buffer = new byte[100];
-        conexao.getInputStream().read(buffer);
+        conexao.getInputStream().read(buffer);//recebe dados do servidor
         System.out.println(new String(buffer, 0, buffer.length, StandardCharsets.UTF_8));
         conexao.close();
             
