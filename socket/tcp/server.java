@@ -17,11 +17,11 @@ class Server{
     public static void main(String[] args) throws IOException{
         //poderia ter um while(true) no cliente e outro no servidor pra troca de mensagens por esse socket até que alguma parte feche a conexão
         ServerSocket serverSocket = new ServerSocket(8081);
-        Socket conexao = serverSocket.accept();
+        Socket conexao = serverSocket.accept();//recebe conexão de um cliente qualquer e cria um socket pra comunicar-se com esse cliente
         byte[] buffer = new byte[100];
-        conexao.getInputStream().read(buffer);
+        conexao.getInputStream().read(buffer);//recebe mensagem do cliente
         System.out.println(new String(buffer, 0, buffer.length));
-        conexao.getOutputStream().write("PONG".getBytes());
+        conexao.getOutputStream().write("PONG".getBytes());//envia pro cliente
         conexao.close();
         serverSocket.close();
     }
