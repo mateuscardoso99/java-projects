@@ -27,7 +27,7 @@ class A{
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj)//comparando endereços de memória
             return true;
         if (obj == null)
             return false;
