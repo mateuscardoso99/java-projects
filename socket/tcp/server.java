@@ -22,7 +22,7 @@ class Server{
         conexao.getInputStream().read(buffer);//recebe mensagem do cliente
         System.out.println(new String(buffer, 0, buffer.length));
         conexao.getOutputStream().write("PONG".getBytes());//envia pro cliente
-        conexao.close();
+        conexao.close();//fecha conexão com o cliente (fecha o socket), se o cliente conectar denovo será criado um novo socket independente
         serverSocket.close();
     }
 }
