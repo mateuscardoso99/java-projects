@@ -17,7 +17,7 @@ class Cliente{
         byte[] buffer = new byte[100];
         conexao.getInputStream().read(buffer);//recebe dados do servidor
         System.out.println(new String(buffer, 0, buffer.length, StandardCharsets.UTF_8));
-        conexao.close();
+        conexao.close();//fecha conexão com o servidor (fecha o socket), se o cliente conectar denovo terá que criar um novo socket
             
         //     //t2 = System.currentTimeMillis();
         //     System.out.println("Pinging "+soc.getInetAddress()+" with string "+str );
