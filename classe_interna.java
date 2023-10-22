@@ -6,6 +6,7 @@
  * 
  */
 
+//esta classe é estática tambem
 class OuterClass{
     int x = 10;
 
@@ -25,6 +26,30 @@ class OuterClass{
         System.out.println(myInner.myInnerMethod());
     }
 }
+
+
+
+public class Main {
+    int x = 10;
+    public class InnerClass3 {
+        int y = 5;
+        static int z = 1;
+    }
+    public static void main(String[] args) {
+        //Uma instância de InnerClass3 pode existir apenas dentro de uma instância de Main e tem acesso direto aos métodos e campos de sua instância envolvente.
+        
+        //Para instanciar uma classe interna, primeiro deve instanciar a classe externa. Em seguida, crie o objeto interno dentro do objeto externo
+        Main m = new Main();
+        Main.InnerClass3 myInner = m.new InnerClass3();//craindo objeto da classe interna apartir da classe externa, objeto da classe interna não estatica depende da classe externa, ao contrário da classe interna estatica
+        
+        // InnerClass3 i = new InnerClass3();//erro, por ser classe não estatica, não pode criar objeto diretamente, objeto de classe interna está associado ao objeto de classe externa
+        System.out.println(myInner.y);//5
+        //System.out.println(i.y);//erro
+        System.out.println("z "+InnerClass3.z);//z é um atributo static, então não precisa criar um objeto da classe pra acessá-lo
+        System.out.println(myInner.z);
+    }
+}
+
 
 class OuterClass2 {
     int x = 10;
@@ -50,20 +75,30 @@ class OuterClass2 {
 // }
 
 
+
 //Classe Interna Estática
-//assim como atributos e métodos static, uma classe static interna não tem acesso aos membros da classe externa.
-class OuterClass3 {
+//assim como atributos e métodos static, uma classe static interna não tem acesso aos membros da classe externa que não sejam static.
+
+//Uma classe aninhada estática interage com os membros da instância de sua classe externa (e outras classes) como qualquer outra classe de nível superior. 
+//Na verdade, uma classe aninhada estática é comportamentalmente uma classe de nível superior que foi aninhada em outra classe de nível superior para 
+//conveniência de empacotamento
+public class Main {
     int x = 10;
-    
-    static class InnerClass3 {
+    public static class InnerClass3 {
         int y = 5;
+        static int z = 1;
+        //int a = x; erro pois classe estatica por rodar em um contexto estatico, não pode acessar atributos não estaticos
     }
-}
-  
-class Main {
     public static void main(String[] args) {
-        OuterClass3.InnerClass3 myInner = new OuterClass3.InnerClass3();
-        System.out.println(myInner.y);
+        Main.InnerClass3 myInner = new Main.InnerClass3();//craindo objeto da classe estatica apartir da classe externa
+
+        //Você instancia uma classe estática interna da mesma forma que uma classe de nível superior:
+        InnerClass3 i = new InnerClass3();//pode criar objeto da classe static diretamente também, objeto de classe interna estática não está associado ao objeto de classe externa
+        System.out.println(myInner.y);//5
+        System.out.println(i.y);//5
+        System.out.println(InnerClass3.z);//z é um atributo static, então não precisa criar um objeto da classe estatica pra acessá-lo
+        System.out.println(x);//erro, classe interna estatica não acessa atributos não estaticos diretamente
+        System.out.println(new Main().x);//solução é criar objeto da classe externa e acessar atributo por meio desse objeto
     }
 }
 
