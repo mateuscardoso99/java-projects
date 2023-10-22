@@ -12,18 +12,21 @@ import java.nio.charset.StandardCharsets;
 class server {
     public static void main(String[] args) throws IOException{
         DatagramSocket serverSocket = new DatagramSocket(8080);
-        byte[] b = new byte[100];
 
-        DatagramPacket pacoteRecebido = new DatagramPacket(b, b.length);
-        serverSocket.receive(pacoteRecebido);
-        System.out.println(new String(pacoteRecebido.getData(), StandardCharsets.UTF_8));
-
-        InetAddress enderecoCliente = pacoteRecebido.getAddress();
-        int porta = pacoteRecebido.getPort();
-
-        b = "PONG".getBytes();
-        DatagramPacket enviarPacote = new DatagramPacket(b, b.length,enderecoCliente,porta);
-        serverSocket.send(enviarPacote);
-        serverSocket.close();
+        //while (true) {
+            byte[] b = new byte[100];
+    
+            DatagramPacket pacoteRecebido = new DatagramPacket(b, b.length);
+            serverSocket.receive(pacoteRecebido);
+            System.out.println(new String(pacoteRecebido.getData(), StandardCharsets.UTF_8));
+    
+            InetAddress enderecoCliente = pacoteRecebido.getAddress();
+            int porta = pacoteRecebido.getPort();
+    
+            b = "PONG".getBytes();
+            DatagramPacket enviarPacote = new DatagramPacket(b, b.length,enderecoCliente,porta);
+            serverSocket.send(enviarPacote);
+            serverSocket.close();
+        //}
     }
 }
