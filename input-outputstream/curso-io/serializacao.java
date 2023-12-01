@@ -1,3 +1,12 @@
+/*
+Java fornece um mecanismo chamado serialização de objetos, onde um objeto pode ser representado como uma sequência de bytes que inclui os dados do objeto, bem como informações sobre o 
+tipo do objeto e os tipos de dados armazenados no objeto.
+Depois que um objeto serializado é gravado em um arquivo, ele pode ser lido do arquivo e desserializado, ou seja, as informações de tipo e os bytes que representam o objeto e 
+seus dados podem ser usados ​​para recriar o objeto na memória.
+O mais impressionante é que todo o processo é independente da JVM, o que significa que um objeto pode ser serializado em uma plataforma e desserializado em uma plataforma totalmente diferente.
+As classes ObjectInputStream e ObjectOutputStream são fluxos de alto nível que contêm os métodos para serializar e desserializar um objeto.
+*/
+
 //ObjectInputStream e ObjectOutputStream lidam com serialização e deserialização de objetos java
 
 //serialização: é quando um objeto é transformado, em uma cadeia de bytes e desta forma pode ser manipulado de maneira mais fácil, seja através de transporte pela rede ou salvo no disco. Após a transmissão ou o armazenamento esta cadeia de bytes pode ser transformada novamente no objeto Java que o originou
