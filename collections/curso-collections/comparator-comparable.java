@@ -6,6 +6,9 @@
 // comparator nao afeta a classe original, ou seja, a classe real nao eh modificada.
 // Comparator fornece metodo compare() para classificar elementos
 // Podemos classificar os elementos da lista do tipo Comparator pelo metodo Collections.sort(List, Comparator).
+
+//a interface Comparable compara a instancia atual (this) com o objeto especificado e o Comparator em Java compara dois objetos de classe diferentes fornecidos.
+//Para resumir, se a classificação de objetos precisa ser baseada na ordem natural, use Comparable, enquanto se a classificação precisar ser feita em atributos de objetos diferentes, use Comparator em Java.
 import java.util.*;
 import java.io.*;
 
@@ -17,7 +20,9 @@ class Student implements Comparable<Student>{
         this.rollno=rollno;  
         this.name=name;  
         this.age=age;  
-    }  
+    } 
+    //Se qualquer classe implementar a interface Comparable em Java, a coleção desse objeto, List ou Array, pode ser classificada automaticamente usando o 
+    //método Collections.sort() ou Arrays.sort() e os objetos serão classificados com base na ordem natural definida pelo método compareTo.
     public int compareTo(Student st){  
         if(age==st.age)  
             return 0;  
@@ -28,7 +33,9 @@ class Student implements Comparable<Student>{
     }  
 }
 
-//usando comparator, com classe pra cada comparacao
+//usando comparator, com classe pra cada comparacao, pois com comparable só pode fazer um tipo de comparação pois é o método é sobrecrito na classe
+//se quiser comparar mais campos o a solução é o comparator
+//Comparator é externo ao tipo de elemento que estamos comparando. Criamos várias classes separadas (que implementam o Comparator) para comparar por diferentes membros.
 class Student2{  
     int rollno;  
     String name;  
