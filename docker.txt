@@ -1,0 +1,29 @@
+docker run [imagem]: cria um container apartir de uma imagem
+docker exec -it [id container]: comando para entrar em um container para executar comandos dentro dele
+docker stop [id container]: para um container
+docker kill [id container]: para um container imediatamente
+docker rm [id container]: apaga um container
+docker build [caminho dockerfile]: cria uma imagem apartir de um Dockerfile
+docker volume [nome volume]: comando cria um novo volume, Os volumes no Docker são gerados independentemente dos contêineres.
+
+docker-compose up: cria e inicia os contêineres;
+docker-compose build: realiza apenas a etapa de build das imagens que serão utilizadas
+docker-compose restart: reinicia os contêineres
+docker-compose start: inicia os contêineres;
+docker-compose stop: paralisa os contêineres;
+docker-compose down: paralisa e remove todos os contêineres e seus componentes como rede, imagem e volume criadas pelo docker-compose up
+
+exemplo: 
+docker build . //cria uma imagem apartir de um Dockerfile
+docker create your-image //cria um contêiner a partir da sua imagem do passo anterior
+docker start container_id //inicia o contêiner do passo anterior
+docker run image //é um atalho para os passos 2 e 3 ( docker create image e docker start container_id).
+
+*docker run só pode iniciar um contêiner por vez, enquanto docker-compose irá configurar e executar vários.
+tudo o que se faz com docker-compose pode ser feito tambem com os comandos tradicionais do docker mas de forma mais trabalhosa
+pois docker-compose reune em um arquivo .yml tudo o que precisa
+
+À medida que os ambientes nativos da nuvem aumentam em complexidade, os comandos docker run se tornarão incontroláveis ​​por muito tempo. 
+Quando um comando docker run tem mais de 70 ou 80 caracteres de comprimento, faz mais sentido configurar o contêiner em um arquivo docker-compose.yaml .
+Além disso, quando um aplicativo nativo da nuvem requer mais suporte de mais de um contêiner em execução, 
+docker-compose é uma opção melhor do que docker run .
