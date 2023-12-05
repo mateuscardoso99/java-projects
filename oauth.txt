@@ -1,0 +1,164 @@
+CONCEITOS:
+
+- CLIENT: aplicativo que acessa recursos protegidos em nome do proprietário do recurso (usuário por exemplo). 
+o Client pode estar hospedado em um servidor, desktop, celular etc..
+
+- ACCESS TOKEN: token usado para acessar recurosos protegidos (dados do usuário por exemplo)
+
+- AUTHORIZATION CODE: token intermediário gerado quando um usuário autoriza um Client a acessar recurso protegidos em seu nome.
+o Client recebe esse token e o troca por um Access Token
+
+- AUTHORIZATION SERVER: servidor que gera Access Tokens depois de autenticar um client e o dono dos recursos
+
+- GRANT: maneira, forma de adquirir um Access Token. (senha, authrization_code por exemplo, etc..)
+
+- SCOPE: permissão (leitura, gravação, edição)
+
+- RESOURCE SERVER: servidor responsável pelos recursos protegidos (dados do usuário, etc..), 
+o servidor é capaz de responder a solicitações de recursos protegidos usando Access Tokens
+
+- RESOURCE OWNER: usuário que autoriza um aplicativo a acessar os seus recursos protegidos.
+o acesso do aplicativo é limitado ao Scope da autorização concedida (leitura, gravação etc..)
+
+- JWT: padrão aberto que define uma maneira compacta e independente de transmitir informações com segurança entre as partes.
+essas informações podem ser verificadas e confiáveis porque são assinadas digitalmente
+
+
+-- Modelo tradicional:
+o CLIENT faz requisições ao servidor usando as credenciais do usuário (email e senha por exemplo)
+
+-- problemas:
+1- aplicativos de terceiros tem acesso as credenciais do usuário, e esses aplicativos precisam salvar as credenciais para
+poder acessar novamente no futuro, podendo salvar em texto não criptografado
+
+2- os apps tem acesso total aos recursos protegidos, sem que o proprietário dos recursos possa fazer alguma restrição de acesso
+
+3- se o proprietário do recurso quiser revogar o acesso dos aplicativos aos seus recursos ele vai ter que trocar a senha em todos eles
+
+4- a segurança disso depende apenas da força da senha do proprietário do recurso
+
+
+OAUTH:
+o OAUTH soluciona esses problemas introduzindo uma camada de autorização e separando a função do CLIENT da função do proprietário do recurso.
+
+no OAUTH o CLIENT solicita acesso aos recursos e recebe um conjunto de credenciais diferente da que o proprietário do recurso tem 
+e dessa forma ele obtem um Access Token, esses Access Tokens são emitidos para os Clients por Authorization Servers com a aprovação 
+do proprietário do recurso.
+
+
+EXEMPLO:
+um usuário (Resource Owner) pode conceder a um serviço de impressão (Client) acesso as suas fotos protegidas que estão armazenadas em um
+serviço de compartilhamento de fotos (Resource Server) sem compartilhar o seu usuário e senha com esse serviço de impressão, em vez disso,
+ele se autentica diretamente com um servidor confiável pelo serviço de compartilhamento de fotos (Authorization Server) que emite as
+credenciais específicas da delegação do serviço de impressão (Access Token)
+
+
+CLIENT --> RESOURCE OWNER (requisição de autorização para o proprietário do recurso)
+
+CLIENT <-- RESOURCE OWNER (proprietário autoriza e é enviada uma credencial de autorização)
+
+CLIENT --> AUTH SERVER (client envia essa autorização para o auth server)
+
+CLIENT <-- AUTH SERVER (client recebe token de acesso)
+
+CLIENT --> RESOURCE SERVER (client envia token de acesso)
+
+CLIENT <-- RESOURCE SERVER (resource server retorna os recursos protegidos)
+
+
+
+
+/////////////////////////////////////
+
+
+
+
+EXEMPLO:
+foi criado 2 projetos, um seria o Client (porta 8001) que vai simular um aplicativo consumindo a api, 
+e o outro seria a api que fará a função de Resource Server e também do Auth Server (porta 8000)
+
+OBS: esse Client precisa ter credenciais pra poder acessar essa api, nesse caso seria interessante disponibilizar um frontend na api,
+pra que se possa cadastrar Clients
+
+-- EXEMPLO GRANT TYPE: AUTHORIZATION_CODE:
+na api foi configurado um client_id e uma URL de callback,
+
+no Client tem um botão que redireciona pra api passando alguns parâmetros:
+
+    $request->session()->put('state', $state = Str::random(40));
+
+    // $state é um valor pra verificar se realmente é o client que está fazendo a solicitação
+ 
+    $query = http_build_query([
+        'client_id' => 'client-id',
+        'redirect_uri' => 'http://third-party-app.com/callback', //url do redirecionamento no Client que receberá os dados da api
+        'response_type' => 'code',
+        'scope' => '',
+        'state' => $state,
+    ]);
+ 
+    return redirect('http://passport-app.test/oauth/authorize?'.$query);
+
+
+essa situação é a mesma quando se está em um site/aplicativo e deseja-se logar com o google e ele pergunta se este site/aplicativo poderá acessar seus dados, 
+surge uma janela no google pedindo essa confirmação, a api da porta 8000 também mostrará essa janela para que o usuário dê acesso ao Client que 
+está na porta 8001 acessar seus dados
+
+esse Client (porta 8001) consegue acessar a api (porta 8000) porque ele possui credenciais (que está sendo passada através do client_id na request),
+e a api reconhece esse Client e pergunta ao usuário se ele dará permissão para que ele acesse seus dados, 
+da mesma forma é o google ou facebook etc.., quando criamos um aplicativo para poder usar o seu login e configuramos uma URL de callback 
+na parte de developers do google/facebook ele retorna um client_id e uma secret_key para salvarmos no nosso aplicativo (Client) e 
+então quando alguém quer logar com o google redirecionamos pro login com o google passando esse client_id recebido do google/facebook e 
+então se o usuário der permissão ele retorna na url de callback do aplicativo (Client) um código que será usado pra enviar uma nova requisição 
+pro google/facebook etc.. passando esse código, o client_id novamente, a secret_key e então vai ser retornado para o Client um Access Token
+que possibilitará o acesso aos dados do usuário, este mesmo cenário acontece nesse exemplo.
+
+
+
+
+
+-- EXEMPLO GRANT TYPE: PASSWORD
+na api foi configurado um client_id
+
+no Client tem um formulário que envia pra api o usuário e senha da sua conta na própria api e mais alguns parâmetros:
+OBS: esse usuário e senha são da conta na api e não da conta no Client
+
+	$response = Http::asForm()->post('http://passport-app.test/oauth/token', [
+	    'grant_type' => 'password',
+	    'client_id' => 'client-id',
+	    'client_secret' => 'client-secret',
+	    'username' => 'taylor@laravel.com',
+	    'password' => 'my-password',
+	    'scope' => '',
+	]);
+	 
+	return $response->json();
+
+esse Client (porta 8001) consegue acessar a api (porta 8000) porque ele possui credenciais (que está sendo passada através do client_id e secret_key na request),
+e a api o reconhece e identifica os dados do usuário que foram enviados e retorna o Access Token que possibilitará o acesso aos dados do usuário.
+
+
+
+
+
+-- EXEMPLO GRANT TYPE: CLIENT_CREDENTIALS:
+esse grant type é interessante quando uma empresa parceira precisa consumir a api da sua empresa para consultar uma lista de produtos por exemplo
+
+na api foi configurado um client_id
+
+	$response = Http::asForm()->post('http://passport-app.test/oauth/token', [
+	    'grant_type' => 'client_credentials',
+	    'client_id' => 'client-id',
+	    'client_secret' => 'client-secret',
+	    'scope' => '', //permissões
+	]);
+	 
+	return $response->json()['access_token'];
+
+a api identifica o Client pelas credenciais passadas e retorna o Access Token que possibilitará o acesso aos dados.
+
+
+
+/////////////////////////////
+
+fonte: https://youtu.be/zVRz9tUxX4E
