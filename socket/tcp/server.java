@@ -12,6 +12,11 @@ dessa forma os envios e recebimentos seguintes serão sempre por esse socket at�
 um socket possui IP de origem e destino e porta de origem e destino
 ao contrário do UDP em que existe um socket apenas que recebe pacotes de todos, no TCP existe um socket pra cada conexão entre um cliente e o servidor
 e todas as mensagens são enviadas/recebidas por esse socket
+
+Cada socket é identificado com uma tupla quádrupla: (endereço IP de origem, número da porta de origem, endereço IP de destino, número da porta de  destino).  
+Quando  o  host  C  recebe  um  datagrama  IP  ele  examina  estes  quatro  campos no pacote para determinar a qual socket ele deve entregar os dados do 
+segmento TCP. Assim, as requisições de A e B passam através de sockets diferentes. 
+O identificador para ambos os sockets tem a porta 8081 como destino, no entanto, os identificadores para estes sockets têm diferentes valores para o IP de origem.
 */
 class Server{
     public static void main(String[] args) throws IOException{
