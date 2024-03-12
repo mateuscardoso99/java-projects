@@ -40,4 +40,9 @@ class Teste {
         i.add(45);
         i.add(90);
     }
+
+    //atribuição direta a um objeto recebido por parâmetro não altera o valor original, só altera fora da função se mudar os atributos do objeto
+    public static void t4(Integer num){
+    	num = 45;
+    }
 }
