@@ -3,3 +3,5 @@ todos os métodos são objetos do tipo Method
 garbage collector: (coletor de lixo) função é liberar da memória os objetos não usados, semelhante ao free() em C
 
 new Pessoa() equivalente ao malloc() em C
+
+"test" == "test" // --> true, isso ocorre porque os literais são internados (método intern()) pelo compilador e, portanto, referem-se ao mesmo objeto
