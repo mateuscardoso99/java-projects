@@ -1,0 +1,5 @@
+todas as classes são objetos do tipo Class
+todos os métodos são objetos do tipo Method
+garbage collector: (coletor de lixo) função é liberar da memória os objetos não usados, semelhante ao free() em C
+
+new Pessoa() equivalente ao malloc() em C
