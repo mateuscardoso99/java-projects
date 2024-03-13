@@ -19,6 +19,8 @@
 //quando as chaves forem string faz ordem alfabética, quando numeros ordem crescente
 //pode ter chaves nulas
 
+//OBS: List.of, Map.of se forem adicionados dessa forma em um arraylist ou mapa não será possível remover, alterar, sobrescrever essa posição do arraylist ou mapa, porque List.of e Map.of são IMUTÁVEIS
+
 
 import java.util.Map;
 import java.util.Set;
