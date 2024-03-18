@@ -1,0 +1,2 @@
+Collectors.toMap(): cria um map chave, valor. recebe a chave, o valor, uma função caso haja chaves duplicadas pra decidir qual fica, e o tipo de mapa que se quer
+ex: Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (existing, replacement) -> existing), TreeMap::new)
