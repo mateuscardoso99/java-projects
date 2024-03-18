@@ -1,2 +1,7 @@
 Collectors.toMap(): cria um map chave, valor. recebe a chave, o valor, uma função caso haja chaves duplicadas pra decidir qual fica, e o tipo de mapa que se quer
 ex: Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (existing, replacement) -> existing), TreeMap::new)
+
+Collectors.mapping():
+
+Collectors.groupingBy(): retorna um mapa com uma chave e o valor dele uma List, recebe uma função de agrupamento e retorna os valores agrupados
+ex: Collectors.groupingBy(r -> Optional.ofNullable(r.getKey().getPessoa).map(v -> v.getNome()).orElse(-1), Collectors.toList())
