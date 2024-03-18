@@ -5,3 +5,32 @@ Collectors.mapping():
 
 Collectors.groupingBy(): retorna um mapa com uma chave e o valor dele uma List, recebe uma função de agrupamento e retorna os valores agrupados
 ex: Collectors.groupingBy(r -> Optional.ofNullable(r.getKey().getPessoa).map(v -> v.getNome()).orElse(-1), Collectors.toList())
+
+ex: 
+Map<Classe, List<OutraClasse>> t1;
+
+Map<Integer, Map<Classe, List<OutraClasse>>> t2 = t1.entrySet()
+                .stream()
+                .collect(
+                    Collectors.groupingBy(
+                            r -> Optional.ofNullable(r.getKey().getPessoa()).map(v -> v.getIdade()).orElse(-1),
+                            Collectors.toList()
+                    )
+                )
+                .entrySet()
+                .stream()
+                .collect(
+                    Collectors.toMap(
+                            Map.Entry::getKey,
+                            e -> e.getValue()
+                                .stream()
+                                .collect(
+                                    Collectors.toMap(
+                                            Map.Entry::getKey, 
+                                            dd -> dd.getValue()
+                                                  .stream()
+                                                  .collect(Collectors.toList())
+                                        )
+                                )
+                        )
+                );
