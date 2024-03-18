@@ -1,0 +1,295 @@
+@manyToOne: quem fica com essa anotação é o dono do relacionamento, a outra classe fica com @one to may
+@manyToOne: por padrão o nome da chave estrangeira usada pelo jpa será o nome da outra classe + nome da primary key, 
+Caso o nome da coluna da sua chave estrangeira não siga o padrão ou caso você prefira deixar isso explícito, você ainda pode usar a anotação @JoinColumn especificando o nome da coluna no atributo name.
+
+@oneToMany: parametro mapped by refere-se ao nome do atributo na classe que tem o @manyToOne
+quando se usa mapped by esse se torna o lado inverso do relacionamento
+
+O lado múltiplo de uma associação um para muitos é opcional. Você pode implementá-lo se for pretendido ou ignorá-lo se não for necessário ou até mesmo arriscado. Um fabricante poderia ter muitos milhares de produtos. Então não faz sentido buscar todos eles de uma vez. É melhor carregar por meio de uma consulta e usar paginação. É claro que você pode adicionar a coleção de produtos ao seu fabricante se achar que isso o ajuda.
+ex: 
+@Entity
+public class Product {
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Manufacturer manufacturer;
+
+}
+
+@Entity
+public class Manufacturer{
+
+ private ManufacturerId manufacturerId;
+
+    private String name;
+
+    private Manufacturer() {
+    }
+}
+classe Manufacturer não tem uma List de Product
+
+-------------------------------------------------------
+
+@oneToOne: relacionamento 1:1
+Caso o nome da coluna da sua chave estrangeira não siga o padrão ou caso você prefira deixar isso explícito, você ainda pode usar a anotação @JoinColumn especificando o nome da coluna no atributo name.
+
+@oneToOne: quem possui a coluna de chave estrangeira recebe a anotação @JoinColumn.
+
+-------------------------------------------------------
+
+@manyToMany: relacionamento N:N
+
+Usaremos um modelo de alunos, cursos e vários relacionamentos entre eles.
+
+@Entity
+class Student {
+
+    @Id
+    Long id;
+
+    @ManyToMany
+    Set<Course> courses;
+}
+
+@Entity
+class Course {
+
+    @Id
+    Long id;
+
+    @ManyToMany
+    Set<Student> students;
+}
+
+O lado proprietário é onde configuramos o relacionamento. Usaremos a classe Student .
+
+Podemos fazer isso com a anotação @JoinTable na classe Student. Fornecemos o nome da tabela de junção ( course_student ), bem como as chaves 
+estrangeiras com as anotações @JoinColumn . O atributo joinColumn se conectará ao lado proprietário do relacionamento e o inverseJoinColumn 
+ao outro lado:
+
+classe student:
+
+@ManyToMany
+@JoinTable(
+  name = "course_student", 
+  joinColumns = @JoinColumn(name = "student_id"), 
+  inverseJoinColumns = @JoinColumn(name = "course_id"))
+Set<Course> courses;
+
+Observe que não é necessário usar @JoinTable ou mesmo @JoinColumn. O JPA gerará os nomes das tabelas e colunas para nós. 
+No entanto, a estratégia que o JPA usa nem sempre corresponde às convenções de nomenclatura que usamos. Portanto, precisamos da 
+possibilidade de configurar nomes de tabelas e colunas.
+
+Do lado do destino, só precisamos fornecer o nome do campo que mapeia o relacionamento.
+
+Portanto, definimos o atributo mappedBy da anotação @ManyToMany na classe Course:
+
+@ManyToMany(mappedBy = "courses")
+Set<Student> students;
+
+**Lembre-se de que, como um relacionamento muitos-para-muitos não possui um lado proprietário no banco de dados, 
+poderíamos configurar a tabela de junção na classe Course e referenciá-la na classe Student.
+
+**no exemplo acima geraria uma tabela course_student com as chaves estrangeiras das tabelas
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@manyToMany com atributos no relacionamento:
+
+A implementação de um relacionamento simples de muitos para muitos foi bastante direta. O único problema é que não podemos adicionar uma 
+propriedade a um relacionamento dessa forma porque conectamos as entidades diretamente. Portanto, não tínhamos como adicionar uma 
+propriedade ao relacionamento em si.
+
+
+Como mapeamos atributos de banco de dados para campos de classe em JPA, precisamos criar uma nova classe de entidade para o relacionamento.
+
+Obviamente, toda entidade JPA precisa de uma chave primária. Como nossa chave primária é uma chave composta(course_id e student_id), 
+temos que criar uma nova classe que conterá as diferentes partes da chave:
+
+
+@Embeddable
+class CourseRatingKey implements Serializable {
+
+    @Column(name = "student_id")
+    Long studentId;
+
+    @Column(name = "course_id")
+    Long courseId;
+
+    // standard constructors, getters, and setters
+    // hashcode and equals implementation
+}
+
+
+Observe que uma classe de chave composta deve atender a alguns requisitos principais :
+
+-Temos que marcá-lo com @Embeddable .
+-Tem que implementar java.io.Serializable .
+-Precisamos fornecer uma implementação dos métodos hashcode() e equals() .
+
+Usando a chave composta criada acima:
+
+@Entity
+class CourseRating {
+
+    @EmbeddedId
+    CourseRatingKey id;
+
+    @ManyToOne
+    @MapsId("studentId")
+    @JoinColumn(name = "student_id")
+    Student student;
+
+    @ManyToOne
+    @MapsId("courseId")
+    @JoinColumn(name = "course_id")
+    Course course;
+
+    int rating;
+    
+    // standard constructors, getters, and setters
+}
+
+Usamos @EmbeddedId para marcar a chave primária, que é uma instância da classe CourseRatingKey.
+Marcamos os campos do aluno e do curso com @MapsId.
+@MapsId significa que vinculamos esses campos a uma parte da chave e eles são as chaves estrangeiras de um relacionamento muitos para um.
+
+Depois disso, podemos configurar as referências inversas nas entidades Aluno e Curso como antes:
+
+class Student {
+
+    // ...
+
+    @OneToMany(mappedBy = "student")
+    Set<CourseRating> ratings;
+
+    // ...
+}
+
+class Course {
+
+    // ...
+
+    @OneToMany(mappedBy = "course")
+    Set<CourseRating> ratings;
+
+    // ...
+}
+
+Configuramos os relacionamentos com as classes Student e Course como @ManyToOne. 
+Poderíamos fazer isso porque com a nova entidade decompusemos estruturalmente o relacionamento muitos para muitos em dois 
+relacionamentos muitos para um.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Muitos para muitos com uma nova entidade:
+
+Digamos que queremos permitir que os alunos se inscrevam em cursos. Além disso, precisamos armazenar o momento em que um aluno se 
+inscreveu em um curso específico. Além disso, queremos armazenar a nota que ela recebeu no curso.
+
+Num mundo ideal, poderíamos resolver isso com a solução acima, onde tínhamos uma entidade com chave composta. Porém, o mundo está longe do 
+ideal e os alunos nem sempre concluem o curso na primeira tentativa.
+
+Nesse caso, há diversas conexões entre os mesmos pares aluno-curso , ou diversas linhas, com os mesmos pares student_id-course_id. 
+Não podemos modelá-lo usando nenhuma das soluções anteriores porque todas as chaves primárias devem ser únicas. 
+Portanto, precisamos usar uma chave primária separada.
+
+Portanto, podemos introduzir uma entidade , que deterá os atributos do registro:
+
+Neste caso, a entidade Registo representa a relação entre as outras duas entidades.
+Por ser uma entidade, terá sua própria chave primária.
+Na solução anterior, lembre-se que tínhamos uma chave primária composta que criamos a partir das duas chaves estrangeiras.
+
+Agora as duas chaves estrangeiras não farão parte da chave primária (a tabela da relação terá a sua própria chave primária):
+
+@Entity
+class CourseRegistration {
+
+    @Id
+    Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    Course course;
+
+    LocalDateTime registeredAt;
+
+    int grade;
+    
+    // additional properties
+    // standard constructors, getters, and setters
+}
+
+Também precisamos configurar os relacionamentos nas classes Aluno e Curso:
+
+class Student {
+
+    // ...
+
+    @OneToMany(mappedBy = "student")
+    Set<CourseRegistration> registrations;
+
+    // ...
+}
+
+class Course {
+
+    // ...
+
+    @OneToMany(mappedBy = "course")
+    Set<CourseRegistration> registrations;
+
+    // ...
+}
+
+
+
+-------------------------------------------------------
+
+
+**as referências(objetos) pertencentes ao proprietário têm precedência e são salvas no banco de dados primeiro.
+
+**é uma boa prática marcar o lado muitos para um como o lado proprietário.
+
+**OBS: se uma classe tem @oneToMany e outra @manyToOne isso se torna um relacionamento bidirecional. Bidirecional significa que se pode acessar os dados dos 2 lados, pra ser unidirecional teria que tirar uma das anotações, escolher Bidirecional ou unidirecional depende do contexto
+
+**Também é possível marcar o lado um para muitos como o lado proprietário e o lado muitos para um como o lado inverso. mas isso não é boa prática podendo levar a insconsistencias, pois o lado 1 seria salvo antes do lado N, ex: salvar uma list em que um desses objetos faz referencia a outro objeto diferente 
+do objeto do lado 1, nesse caso ele seria salvo no bd com a referencia do objeto do lado 1 mesmo ele tendo referencia pra outro objeto pois o lado 1
+como proprietario teria prioridade e seria salvo antes dos objetos do lado N
+
+**É importante em relacionamentos bidirecionais, sempre ligar os dois lados da relação antes de persistir no EntityManager:
+Evento e = ...;
+Categoria c = ...;
+e.setCategoria(c);
+c.eventos.add(e);
