@@ -1,7 +1,23 @@
 Collectors.toMap(): cria um map chave, valor. recebe a chave, o valor, uma função caso haja chaves duplicadas pra decidir qual fica, e o tipo de mapa que se quer
 ex: Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (existing, replacement) -> existing), TreeMap::new)
 
-Collectors.mapping():
+Collectors.mapping(): semelhante ao map() da classe Stream,
+ex:
+public class MappingCollector {
+  static List<Employee> employeeList = Arrays.asList(new Employee("Tom Jones", 45, 15000.00),
+                                                      new Employee("Harry Andrews", 45, 7000.00),
+                                                      new Employee("Ethan Hardy", 65, 8000.00),
+                                                      new Employee("Nancy Smith", 22, 10000.00),
+                                                      new Employee("Deborah Sprightly", 29, 9000.00));
+
+  public static void main(String[] args) {
+    List<String> employeeNames = employeeList
+        .stream()
+        .collect(Collectors.mapping(Employee::getName, Collectors.toList()));
+        System.out.println("List of employee names:" + employeeNames);
+  }
+}
+
 
 Collectors.groupingBy(): retorna um mapa com uma chave e o valor dele uma List, recebe uma função de agrupamento e retorna os valores agrupados
 ex: Collectors.groupingBy(r -> Optional.ofNullable(r.getKey().getPessoa).map(v -> v.getNome()).orElse(-1), Collectors.toList())
