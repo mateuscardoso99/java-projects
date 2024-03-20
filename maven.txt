@@ -3,7 +3,7 @@ mvn clean: Aqui, o projeto é limpo para remover todos os arquivos de compilaç�
 mvn test: Com este comando, é possível executar etapas de teste do projeto. 
 mvn test-compile: Este comando é usado para compilar o código da fonte de teste. 
 mvn install: Este comando ajuda a implantar os arquivos WAR/JAR empacotados, armazenando-os como classes no repositório local. 
-mvn package: Com este comando de ciclo de vida do Maven, empacota-se ou cria-se um arquivo WAR ou JAR (de acordo com o que for configurado no pom.xml) do projeto para poder usar um formato distribuível. 
+mvn package: Com este comando de ciclo de vida do Maven, empacota-se ou cria-se um arquivo WAR ou JAR na pasta /target (de acordo com o que for configurado no pom.xml) do projeto para poder usar um formato distribuível. 
 mvn deploy: O comando de implantação ocorre após a compilação, execução de testes do projeto e construção do projeto. Aqui, os arquivos WAR/JAR empacotados são copiados para o repositório remoto para uso por outros desenvolvedores.
 mvn dependency:tree : mostra a arvore de dependencias
 mvn dependency:analyze : busca dependencias não usadas no projeto
