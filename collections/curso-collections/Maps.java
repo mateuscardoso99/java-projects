@@ -7,14 +7,17 @@
 
 
 //HashMap
+//utiliza tabela de hash
 //nao mantem ordem de inserção
 //nao pode ter chaves nulas
 
 //LinkedHashMap
+//utiliza lista encadeada e tabela de hash como estrutura de dados
 //mantem ordem de insercao
 //nao pode ter chaves nulas
 
 //treemap bom para ordenação
+//utiliza árvore como estrutura de dados
 //pode ser reordenado
 //quando as chaves forem string faz ordem alfabética, quando numeros ordem crescente
 //pode ter chaves nulas
