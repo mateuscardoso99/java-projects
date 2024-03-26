@@ -50,14 +50,24 @@ class A{
      * Mas por que se o equals() está implementado e comparando os objetos baseado no nome e idade? 
      * Porque em uma coleção que se usa código hash é importante primeiro determinar em que “região” esse objeto está.
      * Essa “região” é um espaço dentro da coleção onde os objetos ficam agrupados por semelhança, facilitando assim os encontrar.
-     * 
+
      * ex: existem 3 caixas que agrupam nomes que começam com uma letra, "J", "P" ou "D"
      * Imagine buscar um nome qualquer, por exemplo, “Pedro”, você já iria na caixa que a inicial seja “P” e então compararia os nomes lá dentro
      * Com a coleções que usam hash é a mesma coisa, se quisermos encontrar um produto qualquer, 
      * temos que primeiro determinar o código hash e então olhar dentro dessa “caixa” os objetos com o método equals()
      * uma busca assim é bem mais rápida do que comparar um a um os objetos
      * Para gerar o código hash em um objeto, precisamos sobrescrever o método hashCode(). Ele irá retornar um inteiro que representa o “código da caixa que ele ficará”
-     * 
+
+     * tabelas de hash usam uma função de hash pra gerar o código hash, essa função em java é o hashCode()
+     
+     * tabela de hash utiliza o hashCode() de cada objeto para localizar de forma direta o seu lugar na tabela;
+
+     * sempre que equals() for sobrescrito hashCode() também precisa ser, para que Sempre que dois objetos forem iguais, estes devem possuir o mesmo hashCode();
+
+     * pode haver mais de um objeto com o mesmo código hash, nesse caso a tabela terá uma lista desses objetos e vai procurar em cada um o objeto certo
+
+     * Dois objetos diferentes podem ter o mesmo hashCode, mas isto deve ser evitado
+
      * método contains() de um hashSet se baseia no hashCode pra verificar se um item existe ou não
      */
     @Override
