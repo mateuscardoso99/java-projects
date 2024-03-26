@@ -5,6 +5,11 @@ Erros são condições anormais que ocorrem em caso de falhas graves, não são 
 Exemplo: JVM está sem memória. Normalmente, os programas não podem se recuperar de erros. A classe Exception tem duas subclasses principais: classe IOException e classe RuntimeException.
 */
 
+/*
+Regra de ouro: se dentro do escopo do objeto eu souber o que fazer no caso daquela exceção devo tratar. 
+Se não souber a responsabilidade deve ser passada para quem me chamou.
+*/
+
 //ex: receber exceção lançada no método que foi chamado
 //Exceções verificadas: Uma exceção verificada é uma exceção que é verificada (notificada) pelo compilador em tempo de compilação, também chamada de exceções de tempo de compilação. Essas exceções não podem ser simplesmente ignoradas, o programador deve cuidar (tratar) dessas exceções
 //exemplos: ClassNotFoundException, SQLException, IOException, FileNotFoundException, InstantiationException, InterruptedException
