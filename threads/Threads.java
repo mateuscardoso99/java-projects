@@ -1,3 +1,7 @@
+//processos não compartilham o mesmo espaço de endereçamento, então não é possível compartilhar dados entre eles
+//threads são processos que compartilham o mesmo espaço de endereçamento de memória, isso permite que várias threads usem a mesma variável
+//o que pode erros nessas variáveis (chamado de acesso a área crítica), por isso se usa semáforos, monitores, syncronized etc..
+
 // Threads permite que um programa opere com mais eficiência 
 // fazendo várias coisas ao mesmo tempo. Os threads podem ser 
 // usados ​​para executar tarefas complicadas em segundo plano sem 
