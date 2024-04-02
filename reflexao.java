@@ -103,4 +103,16 @@ class Teste {
 
     //getDeclaredAnnotations() Retorna anotações que estão diretamente presentes neste elemento. Este método ignora anotações herdadas. Se não houver anotações diretamente presentes neste elemento, o valor de retorno será um array de comprimento zero
     //getAnnotations() fornece anotações diretamente implementadas e herdáveis(@Inherited) de sua classe mãe
+
+
+    /*
+    	Collection<Conta> e = (Collection<Conta>) metodoGetContas.invoke(banco); //método retorna uma Set<Conta>
+
+        System.out.println("\nMÉTODOS DAS CONTAS DO BANCO");
+        System.out.println("TOTAL DE CONTAS NO BANCO: " + e.getClass().getMethod("size").invoke(e)); // interface Set possui método size(), aqui é invocado pra pegar o total de contas
+
+        Stream<Conta> s = (Stream<Conta>) e.getClass().getMethod("stream").invoke(e); // interface Set tem um método stream(), aqui é invocado e pega o retorno que é um Stream
+
+        s.forEach(c -> System.out.println("NUMERO DAS CONTAS: "+c.getNumero())); //percorre o stream e mostra os numeros das contas
+    */
 }
