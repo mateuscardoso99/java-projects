@@ -106,6 +106,7 @@ class Teste {
 
 
     /*
+    	Method metodoGetContas = classe.getDeclaredMethod("getContas");
     	Collection<Conta> e = (Collection<Conta>) metodoGetContas.invoke(banco); //método retorna uma Set<Conta>
 
         System.out.println("\nMÉTODOS DAS CONTAS DO BANCO");
