@@ -1,3 +1,7 @@
+//processos não compartilham o mesmo espaço de endereçamento, então não é possível compartilhar dados entre eles
+//threads são processos que compartilham o mesmo espaço de endereçamento de memória, isso permite que várias threads usem a mesma variável
+//o que pode erros nessas variáveis (chamado de acesso a área crítica), por isso se usa semáforos, monitores, syncronized etc..
+
 /**
  * Na computação, o problema do produtor-consumidor (também conhecido como problema do buffer limitado) é um exemplo 
  * clássico de um problema de sincronização de vários processos. O problema descreve dois processos, o produtor e o consumidor, 
