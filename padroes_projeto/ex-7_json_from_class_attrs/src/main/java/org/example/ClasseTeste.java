@@ -4,6 +4,9 @@ public class ClasseTeste {
     private String nome;
     private Integer idade;
     private String endereco;
+    private double idColuna;
+    private Integer[] numeros;
+    private List<Integer> numeros2;
 
     @JSON
     public String getNome() {
@@ -27,5 +30,29 @@ public class ClasseTeste {
     }
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    @JSON
+    public double getIdColuna() {
+        return idColuna;
+    }
+    public void setIdColuna(double idColuna) {
+        this.idColuna = idColuna;
+    }
+
+    @JSON
+    public Integer[] getNumeros() {
+        return numeros;
+    }
+    public void setNumeros(Integer[] numeros) {
+        this.numeros = numeros;
+    }
+
+    @JSON
+    public List<Integer> getNumeros2() {
+        return numeros2;
+    }
+    public void setNumeros2(List<Integer> numeros2) {
+        this.numeros2 = numeros2;
     }
 }
