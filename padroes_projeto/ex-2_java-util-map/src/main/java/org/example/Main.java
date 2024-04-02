@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Map;
+
 import org.example.banco.Banco;
 import org.example.banco.conta.Conta;
 import org.example.banco.conta.TipoConta;
@@ -43,11 +45,27 @@ public class Main {
             banco.criarConta(c);
             //banco.extrato(i);
         }
-        banco.transferir(3l, 5l, 34555d);
         //System.currentTimeMillis() retorna é um número (no caso, um long) que representa a quantidade de milissegundos que se passou desde este instante.
-        //System.out.println("TEMPO USANDO HASHMAP: "+(System.currentTimeMillis() - t1)); // + ou - 3 milisegundos
-        //System.out.println("TEMPO USANDO TREEMAP: "+(System.currentTimeMillis() - t1)); // + ou - 6 milisegundos
-        System.out.println("TEMPO USANDO LINKED_HASH_MAP: "+(System.currentTimeMillis() - t1)); // + ou - 4 milisegundos
+        //System.out.println("TEMPO INSERÇÃO USANDO HASHMAP: "+(System.currentTimeMillis() - t1)); // + ou - 3 milisegundos
+        //System.out.println("TEMPO INSERÇÃO USANDO TREEMAP: "+(System.currentTimeMillis() - t1)); // + ou - 6 milisegundos
+        System.out.println("TEMPO INSERÇÃO USANDO LINKED_HASH_MAP: "+(System.currentTimeMillis() - t1)); // + ou - 4 milisegundos
+        System.out.println("TOTAL DE CONTAS: "+banco.getContas().size());
+
+
+        t1 = System.currentTimeMillis();
+        for(Map.Entry<Long, Conta> e : banco.getContas().entrySet()){}
+        //System.out.println("TEMPO PERCORRENDO USANDO HASHMAP: "+(System.currentTimeMillis() - t1)); // + ou - 3 milisegundos
+        //System.out.println("TEMPO PERCORRENDO USANDO TREEMAP: "+(System.currentTimeMillis() - t1)); // + ou - 1 milisegundos
+        System.out.println("TEMPO PERCORRENDO USANDO LINKED_HASH_MAP: "+(System.currentTimeMillis() - t1)); // + ou - 1 milisegundos
+        System.out.println("TOTAL DE CONTAS: "+banco.getContas().size());
+
+        t1 = System.currentTimeMillis();
+        for(Map.Entry<Long, Conta> e : banco.getContas().entrySet()){
+            Conta c = e.getValue();
+        }
+        //System.out.println("TEMPO BUSCANDO CADA ELEMENTO USANDO HASHMAP: "+(System.currentTimeMillis() - t1)); // + ou - 3 milisegundos
+        //System.out.println("TEMPO BUSCANDO CADA ELEMENTO USANDO TREEMAP: "+(System.currentTimeMillis() - t1)); // + ou - 1 milisegundos
+        System.out.println("TEMPO BUSCANDO CADA ELEMENTO USANDO LINKED_HASH_MAP: "+(System.currentTimeMillis() - t1)); // + ou - 1 milisegundos
         System.out.println("TOTAL DE CONTAS: "+banco.getContas().size());
     }
 }
