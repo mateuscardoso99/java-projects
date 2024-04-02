@@ -86,10 +86,21 @@ class Teste {
         Pessoa p = new Pessoa("joao",35);
         for(Method metodo : p.getClass().getMethods()){
             if(metodo.getName().equals("setNome")){
-                metodo.invoke(p,"carlos");//executa método setNome e altera o nome da pessoa
+                metodo.invoke(p,"carlos");//executa método setNome e altera o nome da pessoa, precisa passar o objeto de Pessoa e os paranetros
             }
         }
         Method getNome = p.getClass().getDeclaredMethod("getNome");
         System.out.println(getNome.invoke(p));//executa o método getNome com o novo nome
     }
+
+    //getDeclaredMethodsinclui todos os métodos declarados pela própria classe.
+    //getMethods retorna apenas métodos públicos, mas também aqueles herdados de uma classe base (aqui de java.lang.Object).
+
+    //o mesmo vale pra getDeclaredConstructors() e getConstructors()
+
+    //getFields() Todos os campos public em toda a hierarquia de classes.
+    //getDeclaredFields() Todos os campos, independentemente de sua acessibilidade, mas apenas para a classe atual, e não para quaisquer classes base das quais a classe atual possa estar herdando.
+
+    //getDeclaredAnnotations() Retorna anotações que estão diretamente presentes neste elemento. Este método ignora anotações herdadas. Se não houver anotações diretamente presentes neste elemento, o valor de retorno será um array de comprimento zero
+    //getAnnotations() fornece anotações diretamente implementadas e herdáveis(@Inherited) de sua classe mãe
 }
