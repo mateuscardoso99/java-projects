@@ -124,7 +124,7 @@ public class ClasseA {
         this.mapa2 = mapa2;
     }
 
-    //@JSON
+    @JSON
     public Map<ClasseC, ClasseC> getMapa3() {
         return mapa3;
     }
