@@ -69,6 +69,55 @@ selecione essa classe quando apropriado.
 
 
 
+/*
+PROBLEMA:
+Imagine que você está criando um simulador de loja de móveis. Seu código consiste em classes que representam:
+
+Uma família de produtos relacionados, digamos: Chair+ Sofa+ CoffeeTable.
+
+Diversas variantes desta família. Por exemplo, os produtos Chair estão disponíveis nestas variantes: , , .Sofa CoffeeTable ModernVictorian ArtDeco
+
+Você precisa criar objetos de mobiliário individuais para que combinem com outros objetos da mesma família. Os clientes ficam muito furiosos quando recebem móveis que não combinam.
+
+Além disso, você não deseja alterar o código existente ao adicionar novos produtos ou famílias de produtos ao programa. Os fornecedores de móveis atualizam seus catálogos com muita frequência e você não gostaria de alterar o código principal toda vez que isso acontece.
+
+
+SOLUÇÃO:
+A primeira coisa que o padrão Abstract Factory sugere é declarar explicitamente interfaces para cada produto distinto da família de produtos 
+(por exemplo, cadeira, sofá ou mesa de centro). Então você pode fazer com que todas as variantes de produtos sigam essas interfaces.
+Por exemplo, todas as variantes de cadeiras podem implementar a Chairinterface; todas as variantes de mesa de centro podem implementar 
+a CoffeeTable interface e assim por diante.
+
+O próximo passo é declarar a Abstract Factory —uma interface com uma lista de métodos de criação para todos os produtos que fazem parte da família de produtos 
+(por exemplo, createChair, createSofae createCoffeeTable). Esses métodos devem retornar tipos de produtos abstratos representados pelas 
+interfaces extraídas anteriormente: Chair, e Sofaassim CoffeeTablepor diante.
+
+Agora, que tal as variantes do produto? Para cada variante de uma família de produtos, criamos uma classe de fábrica separada com base na AbstractFactoryinterface. 
+Uma fábrica é uma classe que devolve produtos de um tipo específico. Por exemplo, o ModernFurnitureFactory só pode criar ModernChair objetos ModernSofae ModernCoffeeTable.
+
+O código do cliente deve funcionar com fábricas e produtos por meio de suas respectivas interfaces abstratas. 
+Isso permite alterar o tipo de fábrica que você passa para o código do cliente, bem como a variante do produto que o código do cliente recebe, 
+sem quebrar o código do cliente real.
+
+Digamos que o cliente queira que uma fábrica produza uma cadeira. O cliente não precisa saber a classe da fábrica, nem importa o tipo de cadeira que recebe. 
+Quer se trate de um modelo Moderno ou de uma cadeira de estilo Vitoriano, o cliente deve tratar todas as cadeiras da mesma forma, utilizando a Chairinterface abstrata. 
+Com esta abordagem, a única coisa que o cliente sabe sobre a cadeira é que ela implementa o sitOnmétodo de alguma forma. 
+Além disso, qualquer que seja a variante da cadeira devolvida, ela sempre corresponderá ao tipo de sofá ou mesa de centro produzido pelo mesmo objeto de fábrica.
+
+Resta esclarecer mais uma coisa: se o cliente é exposto apenas às interfaces abstratas, o que cria os objetos de fábrica reais? 
+Normalmente, o aplicativo cria um objeto de fábrica concreto no estágio de inicialização. Pouco antes disso, o aplicativo deve selecionar o tipo de 
+fábrica dependendo da configuração ou das configurações do ambiente.
+
+*/
+
+
+
+
+
+
+
+
+
 
 // A aplicação escolhe o tipo de fábrica dependendo do 
 // configuração atual ou configurações de ambiente e cria-as 
