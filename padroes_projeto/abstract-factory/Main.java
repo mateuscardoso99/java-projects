@@ -16,6 +16,12 @@
  * O código cliente trabalha com fábricas e produtos usando suas interfaces abstratas. 
  * Ele faz com que o mesmo código cliente funcione com muitas variantes de produtos, dependendo do tipo de objeto fábrica.
  */
+
+
+
+// A aplicação escolhe o tipo de fábrica dependendo do 
+// configuração atual ou configurações de ambiente e cria-as 
+// em tempo de execução (geralmente no estágio de inicialização).
 public class Main {
 
     private static Application configureApplication() {
