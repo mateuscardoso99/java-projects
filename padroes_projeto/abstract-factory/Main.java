@@ -21,6 +21,55 @@ Abstract Factory é um padrão de design criacional que permite produzir famíli
 
 
 
+/*
+Use o Abstract Factory quando seu código precisar trabalhar com diversas famílias de produtos relacionados, mas você não quiser que ele dependa das classes concretas 
+desses produtos — eles podem ser desconhecidos de antemão ou você simplesmente deseja permitir extensibilidade futura.
+
+O Abstract Factory fornece uma interface para criação de objetos de cada classe da família de produtos. 
+Contanto que seu código crie objetos por meio dessa interface, você não precisa se preocupar em criar a variante errada de um produto que não corresponda aos 
+produtos já criados pelo seu aplicativo.
+
+Considere implementar o Abstract Factory quando você tiver uma classe com um conjunto de Factory Methods que confundem sua responsabilidade principal.
+*/
+
+
+
+
+
+
+
+
+
+/*
+Espera-se que os mesmos elementos de UI em um aplicativo multiplataforma se comportem de maneira semelhante, mas pareçam um pouco diferentes em diferentes 
+sistemas operacionais. Além disso, é sua função garantir que os elementos da IU correspondam ao estilo do sistema operacional atual. Você não gostaria que seu 
+programa renderizasse controles do macOS quando fosse executado no Windows.
+
+A interface Abstract Factory declara um conjunto de métodos de criação que o código do cliente pode usar para produzir diferentes tipos de elementos de UI. 
+As fábricas concretas correspondem a sistemas operacionais específicos e criam os elementos da UI que correspondem a esse sistema operacional específico.
+
+Funciona assim: quando um aplicativo é iniciado, ele verifica o tipo do sistema operacional atual. O aplicativo usa essas informações para criar um objeto de 
+fábrica a partir de uma classe que corresponda ao sistema operacional. O restante do código usa esta fábrica para criar elementos de UI. 
+Isso evita que os elementos errados sejam criados.
+
+Com essa abordagem, o código do cliente não depende de classes concretas de fábricas e elementos de UI, desde que funcione com esses objetos por meio de suas 
+interfaces abstratas. Isso também permite que o código do cliente suporte outras fábricas ou elementos de UI que você possa adicionar no futuro.
+
+Como resultado, você não precisa modificar o código do cliente sempre que adicionar uma nova variação de elementos de UI ao seu aplicativo. 
+Você só precisa criar uma nova classe de fábrica que produza esses elementos e modificar levemente o código de inicialização do aplicativo para que ele 
+selecione essa classe quando apropriado.
+*/
+
+
+
+
+
+
+
+
+
+
+
 // A aplicação escolhe o tipo de fábrica dependendo do 
 // configuração atual ou configurações de ambiente e cria-as 
 // em tempo de execução (geralmente no estágio de inicialização).
