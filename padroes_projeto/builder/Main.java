@@ -1,4 +1,6 @@
 /* 
+O Builder se concentra na construção de objetos complexos passo a passo
+
 Diferente de outros padrões de criação, o Builder não exige que os produtos tenham uma interface comum. 
 Isso torna possível produzir produtos diferentes usando o mesmo processo de construção.
 
