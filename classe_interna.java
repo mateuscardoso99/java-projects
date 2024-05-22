@@ -88,6 +88,7 @@ public class Main {
         int y = 5;
         static int z = 1;
         //int a = x; erro pois classe estatica por rodar em um contexto estatico, não pode acessar atributos não estaticos
+        //Main.this.x; erro pois classe estática não pode acessar algo não estático como essa instância da classe mãe
     }
     public static void main(String[] args) {
         Main.InnerClass3 myInner = new Main.InnerClass3();//craindo objeto da classe estatica apartir da classe externa
