@@ -1,5 +1,7 @@
 package br.ufsm.csi.pp.exercicio2;
 
+import br.ufsm.csi.pp.exercicio2_2.Singleton;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,6 +11,19 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Banco {
 
     private Map<String, ContaBancaria> contas = new ConcurrentHashMap<>();
+
+    private Banco() {}
+
+    private static Banco INSTANCE;
+
+        public static Banco getInstance() {
+        synchronized (Banco.class) {
+            if (INSTANCE == null) {
+                INSTANCE = new Banco();
+            }
+        }
+        return INSTANCE;
+    }
 
     public Map<String, ContaBancaria> getContas() {
         return contas;
@@ -57,22 +72,20 @@ public class Banco {
     public ContaBancaria criaConta(TipoConta tipo, Double saldoInicial, boolean especial, Double limite) {
         ContaBancaria conta = null;
         if (tipo == TipoConta.CC) {
-            ContaCorrente cc = new ContaCorrente(especial, limite);
+            ContaCorrente cc = ContaCorrente.newInstance();
+            cc.setEspecial(especial);
+            cc.setLimite(limite);
             cc.setSaldo(saldoInicial);
             cc.setNumero(criaNumeroConta());
             conta = cc;
         } else if (tipo == TipoConta.POUPANCA) {
-            Poupanca poupanca = new Poupanca();
+            Poupanca poupanca = Poupanca.newInstance();
             poupanca.setNumero(criaNumeroConta());
             poupanca.setSaldo(saldoInicial);
             conta = poupanca;
-        } else if (tipo == TipoConta.RENDA_FIXA) {
-            FundosRenda fundosRenda = new FundosRenda(FundosRenda.TipoFundo.RENDA_FIXA);
-            fundosRenda.setNumero(criaNumeroConta());
-            fundosRenda.setSaldo(saldoInicial);
-            conta = fundosRenda;
-        } else if (tipo == TipoConta.RENDA_VARIAVEL) {
-            FundosRenda fundosRenda = new FundosRenda(FundosRenda.TipoFundo.RENDA_VARIAVEL);
+        } else if (tipo == TipoConta.RENDA_FIXA || tipo == TipoConta.RENDA_VARIAVEL) {
+            FundosRenda fundosRenda = FundosRenda.newInstance();
+            fundosRenda.setTipo(tipo == TipoConta.RENDA_FIXA ? FundosRenda.TipoFundo.RENDA_FIXA : FundosRenda.TipoFundo.RENDA_VARIAVEL);
             fundosRenda.setNumero(criaNumeroConta());
             fundosRenda.setSaldo(saldoInicial);
             conta = fundosRenda;
