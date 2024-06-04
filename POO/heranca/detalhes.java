@@ -1,9 +1,9 @@
 class Teste{
     public Object ola(){
-        return "ola";
+        return "ola teste";
     }
     private Object ola2(){
-        return "ola2";
+        return "ola2 teste";
     }
 }
 class HelloWorld extends Teste{
@@ -20,6 +20,7 @@ class HelloWorld extends Teste{
         return "ola 22";
     }
     public static void main(String[] args) {
-        System.out.println("Hello, World!" + new HelloWorld().ola());
+        System.out.println("Hello, World!" + new HelloWorld().ola()); //vai chamar a implementação da classe mãe
+        System.out.println("Hello, World!" + new Teste().ola()); //vai chamar a implementação da classe filha
     }
 }
