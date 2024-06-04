@@ -1,0 +1,21 @@
+Enunciado:
+
+O aluno deverá desenvolver um framework que permite a criação de cópias de qualquer objeto, copiando
+os valores de cada uma de suas propriedades através das próprias propriedades ou invocando getters e
+setters, caso as propriedades sejam privadas.
+A cópia deverá se aprofundar em cada propriedade que esteja anotada com @DeepCopy, criando uma cópia
+deste objeto também e copiando as propriedades.
+
+Deverá ser implementada a interface PrototypeFactory, para o seu framework de cópia de objetos.
+Além disso deverá ser criado casos de testes para a criação e cópia de objetos de classes
+fornecidas no pacote "exemplos". Deverá haver nos testes, um teste específico para demonstrar
+que o objeto retornado pelo framework e o objeto original tem os mesmos valores,
+porém não são os mesmos objetos.
+
+
+Avaliação:
+
+1) Cópias via propriedade [1,5]
+2) Cópias via getter/setter [1,5]
+3) Cópia profunda [1,5]
+4) Caso de teste [1,5]
