@@ -27,7 +27,7 @@ public class Clone implements PrototypeFactory{
                         f.set(copia, copyFromPrototype(valor));
                     }
                     else{//private ou protected, usar getter
-                        f.setAccessible(true);
+                        f.setAccessible(true); //não se usa setAcessible pois faz com que um atributo privado se torne acessível podendo gerar problemas de segurança
                         Method metodo = prototype.getClass().getDeclaredMethod("get" + nomeMetodo);
                         Object valor = metodo.invoke(prototype);
                         f.set(copia, copyFromPrototype(valor));
