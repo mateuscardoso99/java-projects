@@ -14,7 +14,7 @@ public class Banco implements BancoInterface {
         public static BancoInterface getInstance() {
         synchronized (Banco.class) {
             if (INSTANCE == null) {
-                INSTANCE = new LogBancoDecorator(new Banco()); //em vez de instancias banco diretamento, usa o decorator e o decorator instancia banco
+                INSTANCE = new LogBancoDecorator(new Banco()); //em vez de instancias banco diretamento, usa o decorator e o decorator instancia banco, O objeto Decorator (nesse exemplo LogBancoDecorator) contém uma referência ao objeto real (que é a classe Banco, recebendo no construtor)
             }
         }
         return INSTANCE;
