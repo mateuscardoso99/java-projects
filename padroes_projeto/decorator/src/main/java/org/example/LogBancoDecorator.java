@@ -9,7 +9,7 @@ public class LogBancoDecorator implements BancoInterface{
     private BancoInterface objetoDecorado; //referenciar sempre pela interface, pois se usar outro cliente diferente de Banco.class vai funcionar também
     private FileOutputStream arquivoLog;
 
-    public LogBancoDecorator(BancoInterface objetoDecorado) { //nesse Exemplo LogBancoDecorator vai receber um objeto de Banco, mas o objeto é referenciado pela interface não pelo tipo concreto, pois daí qualquer classe que implementar BancoInterface pode usar LogBancoDecorator
+    public LogBancoDecorator(BancoInterface objetoDecorado) { //nesse Exemplo LogBancoDecorator vai receber um objeto de Banco, mas o objeto é referenciado pela interface não pelo tipo concreto pq ia ficar preso ao tipo concreto apenas (Banco), pois daí qualquer classe que implementar BancoInterface pode usar LogBancoDecorator
         this.objetoDecorado = objetoDecorado;
 
         try {
