@@ -1,25 +1,46 @@
 //static blocks:
 
-public class MyStaticVsConstructor {
+public class Main {
+ 
+    /private int numero;
  
     //Os blocos estáticos Java serão chamados quando a JVM carregar a classe na memória, significa que será chamado apenas uma vez
+    //sempre é chamado antes do construtor e antes do método main() 
+    //dá pra ter vários blocos estáticos, todos serão executados apenas 1 vez
+    //se houver blocos estáticos na classe mãe eles serão executados primeiro porque o compilador carrega a classe mãe antes da classe filha.
+    //não pode usar this, só dá pra usar variaveis static
     static {
         System.out.println("I am in static block");
         System.out.println("Static block will be called first than constructor!!!");
         System.out.println("Static block will be called only once.");
     }
+    
+    static {
+        System.out.println("static block 2");
+    }
+    
+    
+    //o objetivo do bloco inicializador de instância é inicializar os membros de dados da instância.
+    //O bloco inicializador de instância se parece com o bloco inicializador estático, mas sem a palavra-chave static :
+    //esse bloco será executado sempre antes que um construtor for executado, ou seja, será executado sempre antes de criar o objeto
+    //vários construtores podem usar este bloco para compartilhar um código por exemplo
+    //dá pra usar this e variaveis static
+    {
+        this.numero = 30;
+        System.out.println(this.numero);
+    }
      
 
     //construtor será chamado toda vez que você criar um objeto
-    public MyStaticVsConstructor(){
+    public Main(){
         System.out.println("I am in constructor");
     }
      
     public static void main(String a[]){
-        MyStaticVsConstructor ksv1 = new MyStaticVsConstructor();
-        MyStaticVsConstructor ksv2 = new MyStaticVsConstructor();
-        MyStaticVsConstructor ksv3 = new MyStaticVsConstructor();
-        MyStaticVsConstructor ksv4 = new MyStaticVsConstructor();
+        Main ksv1 = new Main();
+        Main ksv2 = new Main();
+        Main ksv3 = new Main();
+        Main ksv4 = new Main();
     }
 }
 
