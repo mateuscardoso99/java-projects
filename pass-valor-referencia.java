@@ -45,4 +45,16 @@ class Teste {
     public static void t4(Integer num){
     	num = 45;
     }
+
+    public static void teste(){
+        Main m = new Main();
+        m.idade = 40;
+        System.out.println(m.idade);//40
+        teste2(m);
+        System.out.println(m.idade);//40
+    }
+    public static void teste2(Main m){
+        m = new Main(); //m agora aponta pra um outro endereço então qualquer mudança não afeta o objeto fora dessa função, se tirasse essa linha e deixasse só a debaixo, então ia mudar o objeto original
+        m.idade = 80;
+    }
 }
