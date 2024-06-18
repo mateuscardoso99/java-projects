@@ -54,7 +54,7 @@ public class BancoProxyFactory {
     //precisa passar uma interface, nesse exemplo BancoInterface.class
     //no caso foi passado a interface BancoInterface, mas poderia ser QUALQUER interface, incluindo List, Map etc.. 
     //daí ao chamar os métodos dessas interfaces o método invoke() vai ser chamado em vez de chamar o método da interface
-    //exemplo: na linha 97 banco.extrato() é chamado mas NÃO será executado pela classe Banco, e sim pelo proxy APENAS através do método invoke()
+    //exemplo: na linha 97 banco.extrato() é chamado mas NÃO será executado pela classe Banco, e sim pelo proxy APENAS, através do método invoke()
     public BancoInterface createBancoInstance() {
         return (BancoInterface) Proxy.newProxyInstance(
                                     BancoInterface.class.getClassLoader(),
