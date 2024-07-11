@@ -1,6 +1,8 @@
 @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") //este é um padrão de data que é retornado em JSON, por exemplo 2024-07-11T15:01:11.4994383-03:00,  2023-09-23T15:50:51.04Z
 private Date date;
 
+yyyy-MM-dd'T'HH:mm:ss.SSSZ a data será 2020-02-28T05:50:24.000+02:00
+
 significado dos símbolos no pattern
 
 ‘y’: year
