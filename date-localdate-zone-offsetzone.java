@@ -3,6 +3,8 @@ private Date date;
 
 yyyy-MM-dd'T'HH:mm:ss.SSSZ a data será 2020-02-28T05:50:24.000+02:00
 
+convertendo data nesse formato pra localDateTime: LocalDateTime.parse(date, DateTimeFormatter.ISO_OFFSET_DATE_TIME); //pode testar com outros tbm não só com ISO_OFFSET_DATE_TIME
+
 significado dos símbolos no pattern
 
 ‘y’: year
