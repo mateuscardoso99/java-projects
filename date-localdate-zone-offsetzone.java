@@ -1,7 +1,7 @@
 @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") //este é um padrão de data que é retornado em JSON, por exemplo 2024-07-11T15:01:11.4994383-03:00,  2023-09-23T15:50:51.04Z
 private Date date;
 
-significado das letras no pattern
+significado dos símbolos no pattern
 
 ‘y’: year
 ‘M’: month (in number form, e.g. “1” for January)
@@ -18,7 +18,14 @@ significado das letras no pattern
 ‘a’: AM/PM marker
 ‘z’: fuso horário abreviação (ex: “Pacific Standard Time; PST”)
 ‘Z’: fuso horário offset (deslocamento) (e.g. “-0800”) ex: brasília será -03:00 // Este formata o offset com base no número de letras do padrão. Uma, duas ou três (ZZZ por exemplo) letras produzem a hora e o minuto, sem dois pontos, como '+0130'
+'X': semelhante ao 'Z'
+ 
+'V': time-zone ID, ex: America/Los_Angeles; Z; -08:30
+DateTimeFormatter zdtFormatter = DateTimeFormatter.ofPattern("uuuuMMdd HH:mm:ss.SSSSSS VV ZZZZZ",Locale.ENGLISH); 
+System.out.println(ZonedDateTime.now().format(zdtFormatter)); //20221013 20:55:13.468847 Europe/London +01:00 //pega o id da zona (Europe/London) baseado no Locale e o fuso-horário de londres que é GMT +1
 
+
+ 
 exemplos:
 //yyyy-MM-dd (ISO)	 ->   “2018-07-14”
 //dd-MMM-yyyy	  ->   “14-Jul-2018”
