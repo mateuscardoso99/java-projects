@@ -52,6 +52,13 @@ private Date date;
 
 yyyy-MM-dd'T'HH:mm:ss.SSSZ a data será 2020-02-28T05:50:24.000+02:00
 
+/*
+O que +02:00 está no final não é um fuso horário. Esse texto representa um mero deslocamento do UTC. Um deslocamento é apenas um número de horas-minutos-segundos, positivo ou negativo. 
+Um fuso horário é muito mais. Um fuso horário é um histórico das mudanças passadas, presentes e futuras no deslocamento usado pelas pessoas de uma região específica. 
+Um fuso horário tem um nome no formato de Continent/Region, como Europe/Brusselsou Africa/Cairo. 
+Você pode ajustar de um mero deslocamento para um fuso horário específico. Aplique um ZoneIdpara obter um ZonedDateTime.
+*/
+
 convertendo data nesse formato pra localDateTime: LocalDateTime.parse(date, DateTimeFormatter.ISO_OFFSET_DATE_TIME); //pode testar com outros tbm não só com ISO_OFFSET_DATE_TIME
 
 significado dos símbolos no pattern
