@@ -23,7 +23,7 @@ package com.example;
 public class Main {
     public static void main(String[] args) {
         Janela janelaDecorada = new DecoradorBarraVertical(new JanelaSimples());
-		janelaDecorada.draw();
+	janelaDecorada.draw();
 
         Janela janelaDecorada2 = new DecoradorBarraHorizontal(new DecoradorBarraVertical(new JanelaSimples()));
         janelaDecorada2.draw();
