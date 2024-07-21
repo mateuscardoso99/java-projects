@@ -1,6 +1,6 @@
 package br.ufsm.csi.pp.exercicio1;
 
-public class SemiCirculo implements Forma2D{
+public class SemiCirculo implements Forma2D {
 
     private Float angulo;
     private Float raio;

@@ -5,15 +5,11 @@ import java.lang.reflect.Field;
 public class BancoTest {
 
     public static void main(String[] args) {
-        new BancoTest().tests();
+        //new BancoTest().tests();
     }
 
     private Banco banco;
 
-    public void tests() {
-        this.banco = new Banco();
-        test1();
-    }
 
     private class TestConcorrencia implements Runnable {
 

@@ -6,17 +6,32 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Data
-public abstract class ContaBancaria {
+public abstract class ContaBancaria implements Observavel {
 
     private String numero;
     private Double saldo;
     private List<Movimentacao> movimentacoes = new LinkedList<>();
+    private List<Observer> observers = new ArrayList<>();
+
+    @Override
+    public void adicionaObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notificaObservers() {
+        for (Observer o : observers) {
+            o.update(this);
+        }
+    }
 
     public enum TipoContaBancaria { CONTA_CORRENTE, POUPANCA, FUNDOS_RENDA }
     public static ContaBancaria newInstance(TipoContaBancaria tipoContaBancaria) {
@@ -41,6 +56,7 @@ public abstract class ContaBancaria {
             saldo = saldo - valor;
             Movimentacao movimentacao = new Movimentacao(Movimentacao.TipoMovimentacao.DEBITO, valor, "SAQUE NA BOCA DO CAIXA", new Date());
             movimentacoes.add(movimentacao);
+            notificaObservers();
         }
         throw new MovimentacaoException("saldo insuficiente");
     }
@@ -49,6 +65,7 @@ public abstract class ContaBancaria {
         saldo = saldo + valor;
         Movimentacao movimentacao = new Movimentacao(Movimentacao.TipoMovimentacao.CREDITO, valor, "DEPOSITO NA BOCA DO CAIXA", new Date());
         movimentacoes.add(movimentacao);
+        notificaObservers();
     }
 
     public String extrato() {

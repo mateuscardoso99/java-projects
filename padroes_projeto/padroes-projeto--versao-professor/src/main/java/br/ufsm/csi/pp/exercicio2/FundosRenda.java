@@ -5,12 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class FundosRenda extends ContaBancaria {
+@Data
+public class FundosRenda extends ContaBancaria implements Cloneable {
 
     private TipoFundo tipo;
+
+    private FundosRenda() { }
+
+    public static FundosRenda newInstance() {
+        return new FundosRenda();
+    }
 
     @Override
     public Double calculaIR() {

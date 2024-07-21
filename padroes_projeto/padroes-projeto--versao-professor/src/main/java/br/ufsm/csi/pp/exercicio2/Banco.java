@@ -1,25 +1,22 @@
 package br.ufsm.csi.pp.exercicio2;
 
-import br.ufsm.csi.pp.exercicio2_2.Singleton;
-
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Banco {
+public class Banco implements BancoInterface {
 
     private Map<String, ContaBancaria> contas = new ConcurrentHashMap<>();
 
-    private Banco() {}
+    private Serasa serasa;
 
-    private static Banco INSTANCE;
+    public Banco() {}
 
-        public static Banco getInstance() {
+    private static BancoInterface INSTANCE;
+
+        public static BancoInterface getInstance() {
         synchronized (Banco.class) {
             if (INSTANCE == null) {
-                INSTANCE = new Banco();
+                INSTANCE = new LogBancoDecorator(new Banco());
             }
         }
         return INSTANCE;
@@ -29,10 +26,12 @@ public class Banco {
         return contas;
     }
 
+    @Override
     public boolean excluiConta(String numero) {
         return contas.remove(numero) != null;
     }
 
+    @Override
     public void saque(String numero, Double valor) throws MovimentacaoException {
         ContaBancaria contaBancaria = contas.get(numero);
         if (contaBancaria == null) {
@@ -41,6 +40,7 @@ public class Banco {
         contaBancaria.saque(valor);
     }
 
+    @Override
     public void deposito(String numero, Double valor) {
         if (valor <= 0) {
             throw new IllegalArgumentException("valor nao permitido para deposito.");
@@ -52,23 +52,27 @@ public class Banco {
         contaBancaria.deposito(valor);
     }
 
+    @Override
     public Double saldo(String numero) {
         ContaBancaria contaBancaria = contas.get(numero);
         if (contaBancaria == null) return null;
         return contaBancaria.getSaldo();
     }   
 
+    @Override
     public String extrato(String numero) {
         ContaBancaria contaBancaria = contas.get(numero);
         if (contaBancaria == null) return null;
         return contaBancaria.extrato();
     }
 
+    @Override
     public void transferencia(String contaOrigem, String contaDestino, Double valor) throws MovimentacaoException {
         saque(contaOrigem, valor);
         deposito(contaDestino, valor);
     }
 
+    @Override
     public ContaBancaria criaConta(TipoConta tipo, Double saldoInicial, boolean especial, Double limite) {
         ContaBancaria conta = null;
         if (tipo == TipoConta.CC) {
@@ -91,6 +95,7 @@ public class Banco {
             conta = fundosRenda;
         }
         if (conta != null) {
+            conta.adicionaObserver(serasa);
             contas.put(conta.getNumero(), conta);
         }
         return null;

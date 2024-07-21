@@ -8,13 +8,16 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ContaCorrente extends ContaBancaria {
+public class ContaCorrente extends ContaBancaria implements Cloneable {
 
     private boolean especial;
     private Double limite;
+
+    private ContaCorrente() {}
+
+    public static ContaCorrente newInstance() {
+        return new ContaCorrente();
+    }
 
     public void saque(Double valor) throws MovimentacaoException {
         if (valor <= getSaldo() || (especial && valor <= (getSaldo() + limite))) {

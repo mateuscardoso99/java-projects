@@ -2,13 +2,9 @@ package br.ufsm.csi.pp.exercicio1;
 
 public class Quadrado implements Forma2D {
 
-    private Float lado;
+    private final Float lado;
 
-    public Float getLado() {
-        return lado;
-    }
-
-    public void setLado(Float lado) {
+    public Quadrado(Float lado) {
         this.lado = lado;
     }
 
