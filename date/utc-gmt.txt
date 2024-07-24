@@ -1,0 +1,7 @@
+GMT é um fuso horário usado oficialmente em alguns países europeus e africanos. O horário pode ser exibido usando o formato de 24 horas (0 - 24) ou o formato de 12 horas (1 - 12 am/pm).
+
+UTC não é um fuso horário, mas um padrão de tempo que é a base para o tempo civil e fusos horários em todo o mundo. Isso significa que nenhum país ou território usa oficialmente o UTC como horário local.
+
+usando TimeZone.getTimeZone("America/Sao_Paulo") trás o fuso horário local
+por exemplo: se o horário GMT é 15:00, usando TimeZone.getTimeZone("America/Sao_Paulo") pra definir o fuso horário, o horário vai ser setado pra 12:00 BRT, pois no brasil é GMT -3 e BRT é o fuso horário local do Brasil
+outro exemplo: se o horário GMT é 15:00, usando TimeZone.getTimeZone("Europe/Dublin") pra definir o fuso horário, o horário vai ser setado pra 16:00 IST, pois na Irlanda é GMT +1 e IST é o fuso horário local da Irlanda
