@@ -97,6 +97,12 @@ exemplos:
 //hh 'o''clock' a, zzzz	   ->   “12 o’clock PM, Pacific Daylight Time”
 //K:mm a, z	   ->   “0:08 PM, PDT”
 
+DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.getDefault());
+formatter.setTimeZone(TimeZone.getTimeZone("America/Sao_Paulo"));
+System.out.println(formatter.format(now)); //Wed, 24 Jul 2024 14:48:46 BRT
+
+TimeZone.setDefault( TimeZone.getTimeZone("GMT"));
+System.out.println(new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz").format(now));//Wed, 24 Jul 2024 17:48:46 GMT
 
 
 ZONE: se refere ao nome do continente, país, cidade
