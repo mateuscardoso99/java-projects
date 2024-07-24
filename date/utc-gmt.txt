@@ -5,3 +5,8 @@ UTC não é um fuso horário, mas um padrão de tempo que é a base para o tempo
 usando TimeZone.getTimeZone("America/Sao_Paulo") trás o fuso horário local
 por exemplo: se o horário GMT é 15:00, usando TimeZone.getTimeZone("America/Sao_Paulo") pra definir o fuso horário, o horário vai ser setado pra 12:00 BRT, pois no brasil é GMT -3 e BRT é o fuso horário local do Brasil
 outro exemplo: se o horário GMT é 15:00, usando TimeZone.getTimeZone("Europe/Dublin") pra definir o fuso horário, o horário vai ser setado pra 16:00 IST, pois na Irlanda é GMT +1 e IST é o fuso horário local da Irlanda
+
+
+os 2 horários acima representam o mesmo momento, o mesmo ponto único na linha do tempo. O tempo do relógio de parede deles é diferente: 2 maneiras de ver o mesmo momento no tempo.
+
+quando quiser trabalhar com offsets (deslocamento: GMT-3, GMT+1 etc..) especificamente em vez de fusos horários, use as classes OffsetDateTime e ZoneOffset. As classes ZonedDateTime e ZoneId são para fusos horários.
