@@ -127,6 +127,22 @@ pois datas com um deslocamento de horário local sempre representam os mesmos in
 
 
 
+//LIDANDO COM FUSO HORÁRIO:
+//você precisa armazenar o nome/id do fuso horário inteiro. Por exemplo, eu moro em Oslo, onde meu deslocamento atual é +02:00, mas no inverno (devido ao horário de verão) é +01:00. 
+//A mudança exata entre o horário padrão e o horário de verão depende de fatores que você não quer explorar.
+//Então, em vez de armazenar + 02:00(ou deveria ser + 01:00?) eu armazeno "Europe/Oslo" no meu banco de dados. Agora eu posso restaurar a configuração completa usando:
+TimeZone tz = TimeZone.getTimeZone("Europe/Oslo")
+//Quer saber qual é o meu fuso horário hoje?
+tz.getOffset(new Date().getTime()) / 1000 / 60   //yields +120 minutes
+
+//Porém o mesmo em dezembro:
+Calendar christmas = new GregorianCalendar(2012, DECEMBER, 25);
+tz.getOffset(christmas.getTimeInMillis()) / 1000 / 60   //yields +60 minutes
+//Basta dizer: armazene o nome ou id do fuso horário e toda vez que quiser exibir uma data, verifique qual é o deslocamento atual (hoje) em vez de armazenar valor fixo. 
+//Você pode usar TimeZone.getAvailableIDs() para enumerar todos os IDs de fuso horário suportados.
+ 
+
+
  /*
  ZoneDateTime:
   -armazena todos os campos de data e hora, com uma precisão de nanossegundos, e um fuso horário, com um deslocamento de zona usado para lidar com datas e horas locais ambíguas
