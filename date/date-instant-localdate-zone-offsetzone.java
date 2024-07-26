@@ -186,7 +186,7 @@ tz.getOffset(christmas.getTimeInMillis()) / 1000 / 60   //yields +60 minutes
   - Para capturar o momento atual conforme visto no relógio de parede usado pelas pessoas de uma região específica (um fuso horário):
     ZonedDateTime zdt = ZonedDateTime.now(ZoneId.of( "Europe/Paris" )); se não passar parametro se baseia no Locale padrão
 
-
+  - Um ZonedDateTime é uma representação imutável de uma data-hora com um fuso horário no sistema de calendário ISO-8601, como 2007-12-03T10:15:30+01:00 Europe/Pari s. Ele contém o estado equivalente a três objetos separados: um LocalDateTime , um ZoneId e o ZoneOffset resolvido . 
 
 
  OffsetDateTime:
@@ -197,6 +197,7 @@ tz.getOffset(christmas.getTimeInMillis()) / 1000 / 60   //yields +60 minutes
    -A classe OffsetDateTime representa um momento como uma data e hora com um contexto de algum número de horas-minutos-segundos à frente ou atrás do UTC. 
     A quantidade de deslocamento, o número de horas-minutos-segundos, é representada pela ZoneOffset. Se o número de horas-minutos-segundos for zero, um OffsetDateTime representa um momento em UTC, o mesmo que um Instant.
 
+   -Um OffsetDateTime é uma representação imutável de uma data-hora com um deslocamento de UTC/Greenwich no sistema de calendário ISO-8601, como 2007-12-03T10:15:30+01:00. Em outras palavras, ele armazena todos os campos de data e hora, com uma precisão de nanossegundos, bem como o deslocamento de GMT/UTC.
 
 
 ZoneOffset:
