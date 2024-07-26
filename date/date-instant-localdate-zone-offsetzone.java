@@ -35,6 +35,30 @@ DateTimeFormatter é baseado na API java.time mais nova, que é a forma recomend
 
 
 
+DateTimeFormatterBuilder para construir padrões complexos:
+Use DateTimeFormatterBuilder para criar uma instância do formatador mais complexa.
+
+DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                .parseCaseInsensitive()
+                .append(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                .optionalStart()
+                .appendPattern(".SSS")
+                .optionalEnd()
+                .optionalStart()
+                .appendZoneOrOffsetId()
+                .optionalEnd()
+                .optionalStart()
+                .appendOffset("+HHMM", "0000")
+                .optionalEnd()
+                .toFormatter();
+
+
+
+
+------------------------------------
+
+
+
 ISO 8601 é um padrão internacional para representar datas e horas em um formato claro, inequívoco e universalmente aceito. 
 Ele fornece uma maneira padronizada de expressar datas e horas, o que é essencial para uma ampla gama de aplicações. 
 Isso inclui intercâmbio de dados, comunicação internacional e sistemas de computador.
