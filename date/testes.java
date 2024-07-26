@@ -14,6 +14,10 @@ import java.util.TimeZone;
 
 public class Main {
     public static void main(String[] args) throws ParseException {
+        DateFormat format = new SimpleDateFormat("EEE, dd MM yyyy HH:mm:ss zzz", Locale.getDefault());
+        format.setTimeZone("America/Sao_Paulo");
+        System.out.println(format.format(new Date())); //Fri, 26 Jul 2024 14:11:38 BRT
+        
         System.out.println(DateTimeFormatter.RFC_1123_DATE_TIME.withLocale(Locale.US).format(LocalDateTime.now().atZone(ZoneId.of("GMT")))); 
         //Fri, 26 Jul 2024 09:36:46 GMT -> está em UTC, mas também podemos representar a hora em fusos horários locais especificando o deslocamento (OFFSET) do UTC.
         //usar Locale.US faz com que mostre o nome do dia em inglês
