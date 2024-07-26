@@ -8,6 +8,16 @@ Ele representa uma data sem considerar a hora ou o fuso horário, focando soment
 
 --------------------
 
+DICA:
+Evite depender do sistema operacional host ou da JVM para o fuso horário padrão
+Recomendo que você escreva todo o seu código para declarar explicitamente o fuso horário desejado/esperado. 
+Você não precisa depender do fuso horário padrão atual da JVM. E esteja ciente de que o fuso horário padrão atual da JVM pode mudar a qualquer momento durante o tempo de execução, 
+com qualquer código em qualquer thread de qualquer aplicativo chamando TimeZone.setDefault(). 
+Tal chamada afeta todos os aplicativos dentro dessa JVM imediatamente.
+
+
+-----------------------
+
 
 SimpleDateFormat vs DateTimeFormatter:
 SimpleDateFormat é uma classe que faz parte da API Java há muito tempo, e é usada para analisar e formatar datas de acordo com uma determinada string de formato. 
