@@ -5,6 +5,26 @@ Neste tutorial, exploraremos várias técnicas para formatar um LocalDate para o
 LocalDate é uma parte da API moderna de data e hora introduzida no Java 8 sob o pacote java.time . É imutável, o que significa que, uma vez que uma instância é criada, seu valor não pode ser alterado. 
 Ele representa uma data sem considerar a hora ou o fuso horário, focando somente no ano, mês e dia do mês. LocalDate facilita a manipulação e interação convenientes com informações de data.
 
+
+--------------------
+
+
+SimpleDateFormat vs DateTimeFormatter:
+SimpleDateFormat é uma classe que faz parte da API Java há muito tempo, e é usada para analisar e formatar datas de acordo com uma determinada string de formato. 
+Ela é baseada na classe java.util.Calendar, que é uma API de data e hora legada.
+SimpleDateFormat não é thread-safe, enquanto DateTimeFormatter é thread-safe. Isso significa que você pode usar com segurança um objeto DateTimeFormatter de vários threads, 
+mas precisa ter cuidado ao usar SimpleDateFormat de vários threads.
+
+DateTimeFormatter, por outro lado, é uma classe mais nova que foi introduzida no Java 8 como parte do pacote java.time. 
+É um formatador imutável que pode ser usado para analisar e formatar datas e horas de uma forma mais moderna e flexível. 
+DateTimeFormatter é baseado na API java.time mais nova, que é a forma recomendada de trabalhar com datas e horas em Java.
+é recomendado usar DateTimeFormatter
+
+
+------------------------------------
+
+
+
 ISO 8601 é um padrão internacional para representar datas e horas em um formato claro, inequívoco e universalmente aceito. 
 Ele fornece uma maneira padronizada de expressar datas e horas, o que é essencial para uma ampla gama de aplicações. 
 Isso inclui intercâmbio de dados, comunicação internacional e sistemas de computador.
