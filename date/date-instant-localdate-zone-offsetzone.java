@@ -192,8 +192,8 @@ tz.getOffset(christmas.getTimeInMillis()) / 1000 / 60   //yields +60 minutes
    
    -deve ser usado para armazenar uma data no banco de dados ou comunicá-la por meio de uma rede
    
-   -A classe OffsetDateTimeclass representa um momento como uma data e hora com um contexto de algum número de horas-minutos-segundos à frente ou atrás do UTC. 
-    A quantidade de deslocamento, o número de horas-minutos-segundos, é representada pela ZoneOffsetclasse. Se o número de horas-minutos-segundos for zero, um OffsetDateTimerepresenta um momento em UTC, o mesmo que um Instant.
+   -A classe OffsetDateTime representa um momento como uma data e hora com um contexto de algum número de horas-minutos-segundos à frente ou atrás do UTC. 
+    A quantidade de deslocamento, o número de horas-minutos-segundos, é representada pela ZoneOffset. Se o número de horas-minutos-segundos for zero, um OffsetDateTime representa um momento em UTC, o mesmo que um Instant.
 
 
 
