@@ -106,7 +106,7 @@ significado dos símbolos no pattern
 ‘s’: second
 ‘S’: fração de segundo
 ‘a’: AM/PM marker
-‘z’: fuso horário abreviação (ex: “Pacific Standard Time; PST”)
+‘z’: fuso horário abreviação (ex: “Pacific Standard Time; PST”), mostra o nome do fuso-horário
 ‘Z’: fuso horário offset (deslocamento) (e.g. “-0800”) ex: brasília será -03:00 // Este formata o offset com base no número de letras do padrão. Uma, duas ou três (ZZZ por exemplo) letras produzem a hora e o minuto, sem dois pontos, como '+0130'
 'X': semelhante ao 'Z'
 'XXX': exibe o offset nesse formtato: '-03:00'
