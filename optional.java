@@ -85,6 +85,24 @@ class Main {
 	teste
 	Isso faz diferença nos casos em que o método a ser chamado é muito custoso (faz operações complexas, demoradas, gasta muito processamento ou memória, o objeto retornado é "muito grande", etc). 
  	Nesses casos, usar orElseGet é uma opção melhor que orElse, pois aí o método só é chamado quando realmente necessário.
+
+
+  	---------------------------------------
+
+	em vez de usar vários get junto podendo dar NPE, usa-se optional que previne NPE:
+   	product.getLatestVersion().getProductData().getTradeItem().getInformationProviderOfTradeItem().getGln();
+	usando Optional:
+ 		Optional.ofNullable(product).map(
+	            Product::getLatestVersion
+	        ).map(
+	            ProductVersion::getProductData
+	        ).map(
+	            ProductData::getTradeItem
+	        ).map(
+	            TradeItemType::getInformationProviderOfTradeItem
+	        ).map(
+	            PartyInRoleType::getGln
+	        ).orElse(null);
   	*/
     }
 }
