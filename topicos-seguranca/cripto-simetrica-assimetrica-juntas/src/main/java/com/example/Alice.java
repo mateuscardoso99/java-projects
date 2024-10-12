@@ -44,7 +44,7 @@ public class Alice {
             ObjetoTroca objetoTroca = new ObjetoTroca();
             objetoTroca.setArquivoCriptografiaSimetrica(textoCifrado);
 
-            //critpografa a chave simetrica com cripto assimétrica
+            //critpografa a chave simetrica com cripto assimétrica (essa é a chave de sessão)
             Cipher cipherRSA = Cipher.getInstance("RSA");
             cipherRSA.init(Cipher.ENCRYPT_MODE, ei.getPublicKey());
             cipherRSA.update(keyAES.getEncoded());
