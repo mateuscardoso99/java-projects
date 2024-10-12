@@ -28,6 +28,8 @@ import javax.swing.JFrame;
 //e usa-rá a chave publica recebida de bob para criptografar a chave simétrica
 
 //obs: algoritmos de cifra requerem bytes para executar a criptografia/descriptografia
+
+//usar a crito assimétrica para criptografar a chave simétrica terá como resultado uma chave simétrica cifrada com RSA por exemplo, essa chave é tambem chamada de chave de sessão
 public class Alice {
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, ClassNotFoundException {
         PublicKey chavePublica = null;
