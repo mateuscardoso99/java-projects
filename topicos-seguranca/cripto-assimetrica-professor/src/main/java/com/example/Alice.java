@@ -11,6 +11,13 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 
+/*
+– Chave de sessão: 
+    chave simétrica é cifrada com cripto assimétrica
+    Uma chave simétrica é escolhida para codificar uma sessão; 
+    RSA é utilizado para troca da chave simétrica de forma segura; 
+    Durante a sessão é utilizado um algoritmo rápido de criptografia como DES, 3DES ou AES (https).
+*/
 public class Alice {
 
     @SneakyThrows
