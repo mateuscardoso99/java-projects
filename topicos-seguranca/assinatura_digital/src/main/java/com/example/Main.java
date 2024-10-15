@@ -27,6 +27,11 @@ import org.bouncycastle.operator.DefaultDigestAlgorithmIdentifierFinder;
 import org.bouncycastle.operator.DigestAlgorithmIdentifierFinder;
 
 /*
+
+CRIPTOGRAFIA VS HASH:
+    - A criptografia oculta o conteúdo do texto simples, enquanto um digest é um tipo especial de hash que atua como uma espécie de impressão digital para os dados. 
+    - Se o digest da mensagem for criptografado com uma chave privada, isso pode ser usado como uma assinatura digital para garantir que veio de uma fonte específica.
+    
     Assinatura digital é baseada em criptografia assimétrica.
  *  Assinatura Digital é uma técnica para garantir:
 
