@@ -42,7 +42,7 @@ public class Alice {
             ObjectInputStream oin = new ObjectInputStream(s.getInputStream());
             ObjetoTroca objetoChave = (ObjetoTroca) oin.readObject();
 
-            //criptografa o arquivo com a chave publica do Bob
+            //criptografa o arquivo com a chave de sessão e criptografa a chave de sessão com a chave publica do Bob
             Cipher cipherRSA = Cipher.getInstance("RSA");
             Cipher cipherAES = Cipher.getInstance("AES");
             cipherRSA.init(Cipher.ENCRYPT_MODE, objetoChave.getKey());
