@@ -1,0 +1,21 @@
+A chave é geralmente representada como uma sequência de bits (0s e 1s). 
+O comprimento da chave (em bits) é importante para a segurança do sistema. 
+Por exemplo, uma chave de 128 bits é mais segura que uma de 64 bits.
+
+Alguns algoritmos, como RSA (criptografia assimétrica), utilizam chaves que são compostas por dois números primos grandes, 
+e o produto deles forma a chave pública e privada. 
+A chave privada é mantida em segredo, enquanto a chave pública pode ser distribuída.
+
+Propriedades matemáticas: Em sistemas assimétricos, como RSA e ECC (Criptografia de Curvas Elípticas), 
+as chaves possuem propriedades matemáticas complexas que facilitam a operação de criptografar e descriptografar, 
+sem expor as informações confidenciais.
+
+Embora a chave seja composta por uma sequência binária de dados, ela pode ser codificada em diferentes formatos para 
+facilitar o armazenamento e a transmissão, como em Base64 ou hexadecimal.
+
+
+Se tivermos uma chave AES-128, ela pode ser representada de maneira binária como:
+0110100111011101100110110011011010010110101100100011010100100110
+
+Ou, de maneira mais legível, codificada em hexadecimal como:
+2b7e151628aed2a6abf7158809cf4f3c
