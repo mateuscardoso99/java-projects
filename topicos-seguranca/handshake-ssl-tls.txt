@@ -1,0 +1,48 @@
+HANDSHAKE SSL/TLS
+
+O handshake SSL/TLS é o processo inicial de negociação entre um cliente e um servidor para estabelecer uma conexão segura. Ele envolve a troca de várias mensagens que servem para autenticar a identidade das partes, negociar algoritmos de criptografia e gerar chaves de sessão. Aqui está uma descrição detalhada das etapas envolvidas no handshake SSL/TLS:
+
+1. Cliente Hello
+O cliente (geralmente o navegador ou outro aplicativo) envia uma mensagem chamada Client Hello para o servidor. Nessa mensagem, o cliente especifica:
+
+A versão do protocolo TLS/SSL que suporta (por exemplo, TLS 1.2 ou TLS 1.3).
+A lista de algoritmos de criptografia (cifras) que ele suporta (como AES, RSA, ECDSA, etc.).
+Um número aleatório gerado pelo cliente (chamado de client random).
+Outras opções como métodos de compressão e extensões, como SNI (Server Name Indication).
+
+2. Servidor Hello
+Em resposta, o servidor envia uma mensagem chamada Server Hello que contém:
+
+A versão do protocolo TLS/SSL que será utilizada.
+O algoritmo de criptografia escolhido, com base nas opções fornecidas pelo cliente.
+Um número aleatório gerado pelo servidor (chamado de server random).
+O certificado digital do servidor (que contém a chave pública do servidor, necessário para autenticação).
+
+
+3. Autenticação do Servidor e Troca de Chaves
+Certificado do Servidor: O servidor envia seu certificado digital para o cliente. Este certificado contém a chave pública do servidor e é assinado por uma autoridade certificadora (CA), permitindo que o cliente verifique a autenticidade do servidor.
+O cliente valida o certificado, verificando a assinatura da CA e a validade do certificado (não expirado e não revogado).
+
+  
+4. Geração de Chaves de Sessão
+Exchange de Chaves (Chave Pública/Privada): Dependendo do algoritmo de troca de chaves acordado, as partes geram a chave de sessão:
+No caso de RSA, o cliente gera um segredo compartilhado e o criptografa com a chave pública do servidor, enviando ao servidor.
+No caso de Diffie-Hellman ou Elliptic Curve Diffie-Hellman (ECDHE), um processo de troca de chaves é realizado, no qual ambas as partes geram uma chave compartilhada de forma segura.
+A chave de sessão é usada para criptografar a comunicação subsequente, e o processo de troca de chaves garante que um terceiro não possa interceptar ou manipular essa chave.
+
+
+5. Mensagem de Finalização
+Cliente "Finished": O cliente envia uma mensagem cifrada com a chave de sessão recém-gerada, indicando que ele concluiu a configuração inicial.
+Servidor "Finished": O servidor também envia sua mensagem "Finished", concluindo o handshake.
+Após essas trocas, o handshake é finalizado, e tanto o cliente quanto o servidor começam a criptografar e autenticar os dados usando a chave de sessão compartilhada.
+
+6. Comunicação Segura
+A partir desse ponto, todos os dados trocados entre o cliente e o servidor são criptografados usando a chave de sessão, garantindo confidencialidade, integridade e autenticidade da comunicação.
+
+Resumo do Processo:
+Cliente Hello: Cliente envia informações sobre versões e algoritmos suportados.
+Servidor Hello: Servidor escolhe as configurações de protocolo e envia seu certificado digital.
+Troca de Chaves: Cliente e servidor trocam informações necessárias para gerar a chave de sessão.
+Finalização: Ambas as partes confirmam que a comunicação segura foi estabelecida.
+Transmissão Segura: Dados são criptografados e trocados de forma segura.
+Esse processo garante que os dados transmitidos entre o cliente e o servidor sejam protegidos contra interceptações e ataques, como man-in-the-middle
