@@ -1,0 +1,37 @@
+PORQUE A CRIPTOGRAFIA SIMÉTRICA É USADA DURANTE AS COMUNICAÇÕES 
+
+- porque permite criptografar uma quantidade maior de dados que a criptografia assimétrica. Na cripto assimétrica o limite de dados é o tamanho da chave em bits / 8.
+- porque a cripto assimétrica é muito mais lenta. 
+- porque é preciso uma chave de cripto assimétrica muito grande pra se obter o 
+  mesmo nível de segurança da cripto simétrica. 
+  Por exemplo uma chave RSA de 1024 bits é menos segura que uma chave AES de 128 bits, 
+  porque a segurança do RSA depende da dificuldade de fatoração de números grandes e uma chave de 1024 bits não é segura pra isso, 
+  já uma chave AES de 128 bits oferece boa segurança pois pra quebrar por força bruta teria que testar 2 na 128 possibilidades de chaves o que é impossível com a tecnologia atual. 
+  Outro or exemplo: uma chave de 256 bits em criptografia simétrica oferece segurança comparável a uma chave de 2048 bits ou mais em criptografia assimétrica. 
+  A criptografia assimétrica é muito segura desde que se use chaves grandes apartir de 2048 bits ou mais 
+
+
+Mas existem situações onde a cripto assimétrica é usada, pois na cripto simétrica a chave secreta é uma só e precisa ser 
+compartilhada, já na cripto assimétrica a chave privada não é compartilhada, somente a pública, e isso é melhor em caso de assinaturas digitais por exemplo 
+porque daí não precisa compartilhar a chave secreta, desse modo ela não ficar trafegando na rede. Outra situação onde a cripto assimétrica é usada é para 
+criptografar a chave simétrica já que na cripto simétrica a chave é uma só e precisa ser compartilhada, a cripto assimétrica é usada para adicionar um nível de 
+segurança a mais criptografando a chave simétrica durante o tráfego pela internet
+
+
+Cripto simétrica usa a mesma chave para criptografar e descriptografar, logo ela precisa ser compartilhada durante a comunicação o que não é bom em termos de segurança, 
+por isso é usada em conjunto com a cripto assimétrica. 
+Chaves simétricas devem ter tamanho de no mínimo 128 bits. 
+Principal algoritmo é o AES. Não tem limite de tamanho de dados para criptografar ao contrário da cripto assimétrica. 
+A cripto simétrica é usada durante toda a comunicação HTTPS por ser mais rápida e não ter limite de tamanho de dados para criptografar, a cripto assimétrica é usada para criptografar a chave simétrica 
+visando garantir o compartilhamento da chave com segurança entre as partes 
+
+  
+Criptografia assimétrica usa uma chave pública e uma chave privada. 
+Possui limite de tamanho dos dados a serem criptografados (tamanho da chave / 8). 
+Chaves devem ter tamanho de no mínimo 2048 bits. É bem mais lenta que a cripto simétrica. 
+A chave pública pode ser compartilhada com qualquer um e a chave secreta jamais deve ser compartilhada. 
+Pode-se criptografar e descriptografar com qualquer uma das chaves, quando se quer fazer uma assinatura digital se criptografa com a chave privada e descriptografa com a chave pública, 
+quando se deseja garantir confidencialidade o processo é o inverso deste. 
+É mais usada em assinaturas digitais e para criptografar a chave simétrica durante uma comunicação
+  
+  
