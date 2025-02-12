@@ -12,5 +12,19 @@ Algumas alternativas mais adequadas seriam:
   - Kubernetes e Recursos de Sincronização: Se estiver usando Kubernetes, ele oferece algumas ferramentas como ConfigMaps, StatefulSets, e Leader Election que ajudam a gerenciar recursos e coordenar containers.
   - Zookeeper ou etcd: Ambas as ferramentas são usadas para gerenciamento de estados distribuídos e coordenação de locks entre containers.
 
+Exemplo com Redisson (para Redis):
+Se você estiver usando Redis com Redisson, pode implementar um lock distribuído para garantir que apenas um container execute a operação de insert.
+
+RLock lock = redissonClient.getLock("insert-lock");
+lock.lock();
+try {
+    // Código para o INSERT no banco de dados
+} finally {
+    lock.unlock();
+}
+Vantagem: Garante a exclusividade do insert entre múltiplos containers, independente do banco de dados.
+Desvantagem: Exige a configuração e manutenção de uma ferramenta de coordenação como Redis, Zookeeper ou etcd.
+
+
 Portanto, o uso de synchronized é eficiente apenas dentro de uma instância específica, mas não resolve o problema de concorrência entre múltiplos containers em uma arquitetura distribuída. 
 Para esse cenário, soluções de coordenação distribuída são recomendadas.
