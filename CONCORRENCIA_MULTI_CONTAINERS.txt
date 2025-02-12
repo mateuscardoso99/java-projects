@@ -1,0 +1,15 @@
+Em uma arquitetura com vários containers Docker, o uso de synchronized em métodos para controle de concorrência pode não ser a abordagem mais eficiente, 
+principalmente porque a palavra-chave synchronized é um mecanismo de bloqueio de nível de aplicação (em Java, por exemplo), e não oferece suporte direto para controle de concorrência entre múltiplos containers.
+
+Quando você usa synchronized, ele controla o acesso a um recurso compartilhado dentro de uma única instância de aplicação ou processo. 
+No caso de uma arquitetura com múltiplos containers, você pode ter vários processos concorrentes rodando em diferentes instâncias, e o synchronized não resolve o problema de concorrência entre esses processos.
+
+Em um ambiente distribuído, como é o caso de containers Docker, para controle de concorrência eficaz entre containers, você geralmente precisa de soluções de coordenação que envolvem comunicação entre eles. 
+Algumas alternativas mais adequadas seriam:
+  - Locks Distribuídos: Ferramentas como o Redisson (para Redis) ou Zookeeper são utilizadas para fornecer locks distribuídos. Elas permitem que você garanta que apenas um container acesse uma parte crítica de código ou de dados ao mesmo tempo.
+  - Filas de Mensagens: Usar filas de mensagens, como o RabbitMQ ou Kafka, pode ser uma boa solução para coordenar tarefas entre containers. Isso permite garantir que as operações sejam realizadas em uma sequência ordenada, evitando condições de corrida.
+  - Banco de Dados: Em alguns casos, você pode usar o banco de dados para gerenciar locks ou outras formas de controle de concorrência. Por exemplo, com o uso de SELECT FOR UPDATE em bancos de dados relacionais.
+  - Kubernetes e Recursos de Sincronização: Se estiver usando Kubernetes, ele oferece algumas ferramentas como ConfigMaps, StatefulSets, e Leader Election que ajudam a gerenciar recursos e coordenar containers.
+
+Portanto, o uso de synchronized é eficiente apenas dentro de uma instância específica, mas não resolve o problema de concorrência entre múltiplos containers em uma arquitetura distribuída. 
+Para esse cenário, soluções de coordenação distribuída são recomendadas.
