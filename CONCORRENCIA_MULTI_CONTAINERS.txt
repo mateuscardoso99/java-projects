@@ -28,3 +28,146 @@ Desvantagem: Exige a configuração e manutenção de uma ferramenta de coordena
 
 Portanto, o uso de synchronized é eficiente apenas dentro de uma instância específica, mas não resolve o problema de concorrência entre múltiplos containers em uma arquitetura distribuída. 
 Para esse cenário, soluções de coordenação distribuída são recomendadas.
+
+
+
+---------------------------------------------------------------------
+
+
+
+em uma arquitetura multi containers docker, o hibernate tem algum recurso pra bloquear uma tabela pra poder fazer insert nela?
+
+No Hibernate, não há um recurso direto para bloquear uma tabela inteira como você faria com um comando SQL LOCK TABLE em bancos de dados tradicionais. 
+No entanto, o Hibernate fornece mecanismos de bloqueio em nível de linha e transação que podem ser utilizados para implementar controle de concorrência, 
+incluindo cenários em que você quer garantir que apenas uma instância de um container (ou thread) execute operações como INSERT em uma tabela, evitando condições de corrida.
+
+A solução para o seu caso depende de qual tipo de controle de concorrência você precisa. Vamos explorar algumas abordagens que você pode usar em uma arquitetura de múltiplos containers Docker.
+
+1. Bloqueio de Linha com Pessimistic Locking (LockMode.PESSIMISTIC_WRITE)
+O Hibernate permite que você use locks pessimistas para garantir que apenas uma transação possa acessar e modificar uma linha de dados em um determinado momento. Quando você usa LockMode.PESSIMISTIC_WRITE, o Hibernate gera um comando SELECT FOR UPDATE, que bloqueia a linha que está sendo lida até que a transação seja completada, impedindo que outras transações possam modificar ou ler essas linhas enquanto o lock estiver ativo.
+
+Embora essa abordagem não bloqueie a tabela inteira, ela pode ser usada para bloquear registros específicos que você está tentando inserir ou modificar.
+
+Exemplo com Hibernate (bloqueio pessimista para uma linha):
+
+Session session = sessionFactory.openSession();
+Transaction transaction = session.beginTransaction();
+
+String hql = "FROM Entidade e WHERE e.id = :id";
+Query query = session.createQuery(hql);
+query.setParameter("id", id);
+query.setLockMode("e", LockMode.PESSIMISTIC_WRITE);  // Bloqueio pessimista
+
+Entidade entidade = (Entidade) query.uniqueResult();
+
+// Agora, faça o INSERT ou UPDATE com a linha bloqueada
+entidade.setValor(novoValor);
+session.update(entidade);
+
+transaction.commit();
+session.close();
+
+Neste exemplo, a linha específica com o id fornecido será bloqueada enquanto a transação estiver ativa, e outra transação (ou outro container) que tentar acessar a mesma linha será bloqueada até que a transação seja concluída.
+
+
+
+
+
+
+
+2. Bloqueio de Tabela via SQL Personalizado
+Se você realmente precisa bloquear uma tabela inteira no banco de dados, você pode executar comandos SQL personalizados no Hibernate usando a API de SQLQuery. Isso pode ser útil para cenários onde você precisa garantir que ninguém mais tenha acesso à tabela durante a execução de uma operação de INSERT.
+
+Exemplo:
+Você pode usar uma consulta SQL direta com o comando LOCK TABLE:
+
+
+Session session = sessionFactory.openSession();
+Transaction transaction = session.beginTransaction();
+
+// Executa um bloqueio da tabela inteira para a transação
+SQLQuery query = session.createSQLQuery("LOCK TABLE tabela_name IN EXCLUSIVE MODE");
+query.executeUpdate();
+
+// Agora, execute o INSERT ou outra operação
+// Exemplo de INSERT:
+Query insertQuery = session.createSQLQuery("INSERT INTO tabela_name (coluna1, coluna2) VALUES (:valor1, :valor2)");
+insertQuery.setParameter("valor1", valor1);
+insertQuery.setParameter("valor2", valor2);
+insertQuery.executeUpdate();
+
+transaction.commit();
+session.close();
+
+
+Observações:
+O LOCK TABLE bloqueia a tabela inteira para a transação, o que significa que nenhuma outra transação poderá acessar a tabela até que a transação em curso seja concluída. Isso pode ser útil para evitar que múltiplos containers ou transações concorrentes insiram dados simultaneamente.
+Importante: O uso de LOCK TABLE pode reduzir a escalabilidade da aplicação, pois ele pode bloquear outras operações de leitura ou escrita na tabela até que o lock seja liberado.
+
+
+
+
+
+3. Usar uma Tabela de Controle de Locks
+Uma abordagem alternativa seria criar uma tabela de controle de locks para gerenciar as operações de inserção. Essa tabela poderia ter um campo de status que indica se a tabela ou um tipo específico de dado está "bloqueado" ou "em uso". Quando um container quer fazer um INSERT, ele primeiro verifica esse campo na tabela de controle e define o lock, garantindo que somente uma instância (container) possa fazer a inserção.
+
+Exemplo de tabela de controle de lock:
+
+CREATE TABLE controle_locks (
+    nome_lock VARCHAR(255) PRIMARY KEY,
+    status BOOLEAN
+);
+
+O Hibernate pode acessar e atualizar esse status para garantir que apenas um container tenha permissão para inserir dados:
+
+// Verificar e bloquear
+String hqlCheckLock = "FROM ControleLock c WHERE c.nomeLock = :nomeLock AND c.status = false";
+Query queryCheckLock = session.createQuery(hqlCheckLock);
+queryCheckLock.setParameter("nomeLock", "tabela_lock");
+
+ControleLock lock = (ControleLock) queryCheckLock.uniqueResult();
+
+if (lock != null) {
+    lock.setStatus(true);  // Marcar como "em uso"
+    session.update(lock);
+
+    // Agora, faça o INSERT na tabela de dados
+
+    // Após o insert, liberar o lock
+    lock.setStatus(false);
+    session.update(lock);
+}
+
+
+
+
+
+4. Usar Uma Fila para Orquestrar Inserts (Alternativa para Evitar Locks)
+Em sistemas de múltiplos containers, uma abordagem ainda mais escalável seria usar uma fila de mensagens (como RabbitMQ, Kafka, ou AWS SQS) para orquestrar as inserções. Com essa abordagem:
+
+Os containers podem colocar uma tarefa de INSERT na fila.
+Um único consumidor (container) processa cada mensagem e executa o INSERT, garantindo que apenas um container realize a operação de inserção em qualquer momento.
+5. Considerações sobre Escalabilidade
+Embora o uso de bloqueios (como PESSIMISTIC_WRITE e LOCK TABLE) seja eficaz para garantir que apenas uma transação ou container faça o INSERT, ele pode afetar negativamente a escalabilidade do sistema. Locks pesados podem causar contenção (quando múltiplas transações precisam aguardar a liberação do lock) e até deadlocks (quando duas transações ficam esperando uma pela outra).
+
+Portanto, se a escalabilidade for um requisito importante, você deve considerar usar estruturas de controle de concorrência mais sofisticadas, como:
+
+Controle de concorrência otimista (usando versões ou timestamps no banco de dados).
+Sistemas de filas para orquestrar inserções.
+Locks distribuídos usando ferramentas como Redisson (para Redis), Zookeeper, ou etcd.
+
+
+
+Conclusão
+O Hibernate, por si só, não tem um recurso dedicado para bloquear uma tabela inteira da maneira como você pode fazer com LOCK TABLE diretamente no SQL. No entanto, você pode usar o bloqueio de linha (LockMode.PESSIMISTIC_WRITE) para controlar o acesso simultâneo aos dados e evitar condições de corrida, ou usar SQL direto para emitir um LOCK TABLE.
+
+Mas: essa abordagem pode impactar a escalabilidade do sistema, especialmente em um ambiente de múltiplos containers. Se a escalabilidade for uma preocupação crítica, você pode considerar alternativas como controle de concorrência otimista, filas de mensagens, ou locks distribuídos.
+
+
+
+
+
+
+
+
+
