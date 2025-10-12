@@ -58,7 +58,7 @@ COPY - Copia novos arquivos e diretórios e os adiciona ao filesystem do contai
 ENTRYPOINT - Permite configurar um container para rodar um executável. Quando finaliza o executável, o container també́m será.
 ENV - Informa variáveis de ambiente ao container.
 EXPOSE - Informa qual porta o container estáouvindo
-FROM - Indica qual imagem seráutilizada como base. Primeira linha do dockerfile, pode ter vários dentro de um mesmo Dockerfile, dada FROM inicia um novo estágio de construção. Você pode usar a instrução COPY --from=<stage_name> para copiar arquivos de um estágio anterior para o atual. 
+FROM -  Primeira linha do dockerfile, Indica qual imagem será utilizada como base. Pode ter vários FROM dentro de um mesmo Dockerfile, dada FROM inicia um novo estágio de construção. Você pode usar a instrução COPY --from=<stage_name> para copiar arquivos de um estágio anterior para o atual. 
 Qual usar? Se você precisa construir um único contêiner com uma imagem final menor, use um Dockerfile com múltiplos FROM (multi-stage build).
 Se você precisa construir e gerenciar um aplicativo completo com múltiplos serviços (que podem rodar em diferentes imagens base), use Docker Compose com múltiplos Dockerfiles
 MAINTAINER - Autor da imagem
