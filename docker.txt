@@ -1,3 +1,74 @@
+IMAGEM:
+Pacote com todas as dependências e informações necessárias para criar
+um contêiner. Uma imagem inclui todas as dependências (como
+estruturas), além da configuração de implantação e execução a ser usada
+por um runtime de contêiner. Geralmente, uma imagem deriva de várias
+imagens base que são camadas empilhadas umas sobre as outras para
+formar o sistema de arquivos do contêiner. Uma imagem é imutável depois
+de ser criada
+
+DOCKERFILE:
+Arquivo de texto que contém instruções para criar uma imagem do Docker.
+É como um script em lotes, a primeira linha declara a imagem base com a
+qual começar e, em seguida, siga as instruções para instalar os programas
+necessários, copiar os arquivos e assim por diante, até obter o ambiente de
+trabalho que precisa
+
+BUILD:
+A ação de criar de uma imagem de contêiner com base nas informações e no
+contexto fornecido pelo Dockerfile, além de arquivos adicionais na pasta em que a
+imagem é criada. Exemplo de comando para a criação de uma imagem usando
+docker: docker build
+
+CONTAINER:
+Uma instância de uma imagem do Docker. Um contêiner representa a execução de
+um único aplicativo, processo ou serviço. Consiste no conteúdo de uma imagem
+do Docker, um ambiente de execução e um conjunto padrão de instruções. Ao
+dimensionar um serviço, você cria várias instâncias de um contêiner da mesma
+imagem. Ou um trabalho em lotes pode criar vários contêineres da mesma
+imagem, passando parâmetros diferentes para cada instância.
+
+VOLUME:
+Oferecem um sistema de arquivos gravável que o contêiner pode usar. Uma vez
+que as imagens são somente leitura, mas a maioria dos programas precisam
+gravar para o sistema de arquivos, os volumes adicionam uma camada gravável
+sobre a imagem de contêiner, de modo que os programas têm acesso a um
+sistema de arquivos gravável. O programa não sabe que está acessando um
+sistema de arquivos em camadas, é apenas o sistema de arquivos como de
+costume. Os volumes ficam no sistema de host e são gerenciados pelo Docker.
+
+DOCKER COMPOSE:
+Ferramenta de linha de comando e formato de arquivo YAML com metadados
+para definir e executar aplicativos de vários contêineres. Você define um único
+aplicativo com base em várias imagens com um ou mais arquivos .yml que
+podem substituir valores dependendo do ambiente. Depois de criar as definições,
+você pode implantar todo o aplicativo de vários contêineres com um único
+comando (docker-compose up), que cria um contêiner por imagem no host do Docker
+Daria pra fazer tudo sem usar o docker compose, mas teria que levantar na mão todos os containers e criar redes, volumes etc..
+
+
+
+
+Alguns comandos do Dockerfile:
+ADD - Copia novos arquivos, diretórios, arquivos TAR ou arquivos remotos e adiciona ao filesystem do container.
+CMD - Executa um comando. Diferentemente do RUN, que executa o comando quando está“buildando”, a imagem, o
+CMD iráfazê-lo somente quando o container for iniciado.
+LABEL - Adiciona metadados a imagem, como versão, descrição e fabricante
+COPY - Copia novos arquivos e diretórios e os adiciona ao filesystem do container
+ENTRYPOINT - Permite configurar um container para rodar um executável. Quando finaliza o executável, o container també́m será.
+ENV - Informa variáveis de ambiente ao container.
+EXPOSE - Informa qual porta o container estáouvindo
+FROM - Indica qual imagem seráutilizada como base. Primeira linha do dockerfile, pode ter vários dentro de um mesmo Dockerfile, dada FROM inicia um novo estágio de construção. Você pode usar a instrução COPY --from=<stage_name> para copiar arquivos de um estágio anterior para o atual. 
+Qual usar? Se você precisa construir um único contêiner com uma imagem final menor, use um Dockerfile com múltiplos FROM (multi-stage build).
+Se você precisa construir e gerenciar um aplicativo completo com múltiplos serviços (que podem rodar em diferentes imagens base), use Docker Compose com múltiplos Dockerfiles
+MAINTAINER - Autor da imagem
+RUN - Executa qualquer comando em uma nova camada no topo da imagem e “comita” as alterações.
+USER - especifica o usuário que será utilizado na imagem. Por padrão é root
+VOLUME - Permite criação de um ponto de montagem no container.
+WORKDIR - Responsá́vel por mudar do diretório raiz para o específico nele
+
+
+
 docker run [imagem]: cria um container apartir de uma imagem
 docker exec -it [id container]: comando para entrar em um container para executar comandos dentro dele
 docker stop [id container]: para um container
@@ -5,6 +76,7 @@ docker kill [id container]: para um container imediatamente
 docker rm [id container]: apaga um container
 docker build [caminho dockerfile]: cria uma imagem apartir de um Dockerfile
 docker volume [nome volume]: comando cria um novo volume, Os volumes no Docker são gerados independentemente dos contêineres.
+docker run [imagem] -p [porta pc real]:[porta do container] cria um container apartir de uma imagem com mapeamento de portas entre o container e o pc real
 
 docker-compose up: cria e inicia os contêineres;
 docker-compose build: realiza apenas a etapa de build das imagens que serão utilizadas
