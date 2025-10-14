@@ -6,6 +6,7 @@ por um runtime de contêiner. Geralmente, uma imagem deriva de várias
 imagens base que são camadas empilhadas umas sobre as outras para
 formar o sistema de arquivos do contêiner. Uma imagem é imutável depois
 de ser criada
+**cada vez que muda o código do projeto, é preciso apagar a imagem e buildar ela denovo pois ela pega a versão antiga, dá pra usar tag nas imagens pra sempre criar uma nova caso ocorram alterações
 
 DOCKERFILE:
 Arquivo de texto que contém instruções para criar uma imagem do Docker.
@@ -29,6 +30,8 @@ imagem. Ou um trabalho em lotes pode criar vários contêineres da mesma
 imagem, passando parâmetros diferentes para cada instância.
 
 VOLUME:
+- Armazenamento persistente de dados
+- Volumes são o mecanismo preferencial para a persistência de dados gerados e usados por contêineres do Docker.
 Oferecem um sistema de arquivos gravável que o contêiner pode usar. Uma vez
 que as imagens são somente leitura, mas a maioria dos programas precisam
 gravar para o sistema de arquivos, os volumes adicionam uma camada gravável
@@ -36,6 +39,27 @@ sobre a imagem de contêiner, de modo que os programas têm acesso a um
 sistema de arquivos gravável. O programa não sabe que está acessando um
 sistema de arquivos em camadas, é apenas o sistema de arquivos como de
 costume. Os volumes ficam no sistema de host e são gerenciados pelo Docker.
+
+criar volume:
+docker volume create [nome volume]
+
+rodar container postgres com volume para manter os dados depois do container encerrar:
+docker run -v [nome volume]:/var/lib/postgresql/data -e POSTGRES_PASSWORD=1234 postgres
+
+no docker-compose.yml, ao especificar volumes, o volume será criado automaticamente pelo docker
+
+
+
+BIND: (alternativa aos volumes)
+- Mapeamento de pastas entre o host e container
+- Mapeamento simples entre arquivos, não permite uma série de opções que
+- volumes oferecem (ex: facilidade ao fazer backup)
+em vez de mapear para um container Docker, é mapeado para uma pasta do pc real
+
+criar bind em um container postgres:
+docker run -v [caminho da pasta no pc real]:[caminho da pasta dentro do container] -e POSTGRES_PASSWORD=1234 postgres
+
+
 
 DOCKER COMPOSE:
 Ferramenta de linha de comando e formato de arquivo YAML com metadados
