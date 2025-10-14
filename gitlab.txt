@@ -1,0 +1,76 @@
+- fork: acessar o repositório que sequer contribuir e clicar em "fork"
+- ao fazer isso será criado um repositório na minha conta igual ao repositório que eu quero contribuir, mas esse repositório é meu
+- as mudanças feita nesse repositório valem só pra mim, se eu quiser que essas mudanças entrem no repositório que eu fiz fork, precisa criar uma merge request
+
+
+gitlab pages:
+- na criação do repositório, definir como gitlab pages, dessa forma ele será acessível em https://<username>.github.io/<repository-name>
+
+
+Integração Contínua:
+- O código é commitado no repositório compartilhado com frequência, Objetivo é evitar grandes conflitos de merge, ou seja, (“inferno de integração”)
+– Um servidor de compilação cria software automaticamente e executa testes de unidade e testes de integração para identificar regressões 
+
+
+Entrega Contínua
+- Os incrementos publicáveis são “entregues” com frequência, possivelmente automaticamente, à medida que os testes de unidade e os testes de aceitação são aprovados
+- Objetivo é encurtar os ciclos de lançamento, garantindo que o código de produção seja sempre despachável
+– "Entrega" é qualquer mecanismo usado para liberar o código - pode ser tão simples quanto um merge com a branch oficial de lançamento 
+- Os recursos que passam nos testes de aceitação do cliente são implantados automaticamente na produção
+– Reduz a latência de desenvolvimento de software para produção
+– Minimiza as alterações lançadas em cada versão do software
+– Exemplo: o Gitlab permite a mesclagem automática de um branch para master quando o conjunto de testes automatizado é concluído com sucesso
+
+
+CI/CD
+- permite que comandos shell sejam executados em resposta a commits
+- Você pode definir e executar o seu próprio: Processo de compilação, Teste, Processo de empacotamento/implantação/fusão 
+- Execução do CI/CD depende de um arquivo .gitlab-ci.yml na raiz do projeto
+- O USO DE CI/CD REQUER A ATIVAÇÃO DE UM EXECUTOR (RUNNER), a instalação do Gitlab do SLU atualmente não possui executores, mas uma conta gratuita no gitlab.com permite 400 minutos de tempo de execução por mês
+- quando existe um arquivo .gitlab-ci.yml um pipeline é levantado no repositório fazendo build do que foi definido quando um push é feito
+- Uma ação de confirmação resulta na execução de um pipeline, Um pipeline tem um ou mais estágios (stages), Um estágio tem um ou mais trabalhos (jobs)
+- Cada tarefa é transferida para um executor, que executa os comandos desejados
+
+
+
+Exercício aula
+- tem uma VM rodando no virtual box ubuntu com ssh rodando na porta 22
+- foi feito um redirecionamento de portas na configuração da VM ubuntu para que a porta 2222 do hospedeiro (PC real) redirecione para a porta 22 da VM, (porta do hospedeiro 2222, porta do convidado 22)
+- no PC real, rodou-se o comando "ssh ubuntu@localhost -p 2222", dessa forma foi possível acessar por SSH a VM do virtual box pelo PC real windows
+
+- Vamos instalar o runner do Gitlab na nossa máquina virtual Linux, para simular um ambiente de deploy em servidor de produção
+– Nossa VM Linux vai ser nosso servidor de aplicação (vamos rodar projetos de backend e frontend nele)
+– Além disso vai ser nosso servidor de deploy (em aplicações reais isso estaria em um servidor separado)
+
+Passos para instalação:
+   – curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | sudo bash
+   – sudo apt-get install gitlab-runner
+   – Registrar o runner no gitlab com um token
+
+no gitlab foi criado um grupo o nome sendo a minha matrícula
+depois foi criado um runner no gitlab
+
+é preciso registrar o runner na VM local:
+gitlab-runner register  --url https://gitlab.com  --token glrt-x-pIN_XvPSkaY6WlQAC-B2c6MXdsd3p2Cm86MQp0OjIKdTpocHR1dBg.01.1j17pqoyo
+definir o tipo como shell
+
+rodar: sudo usermod -aG docker gitlab-runner. isso faz com que o gitlab-runner possa rodar o comando docker
+sudo systemctl restart gitlab-runner
+sudo visudo e adicionar no arquivo: gitlab-runner ALL=(ALL) NOPASSWD:ALL
+
+
+no gitlab, dentro do grupo criado, foi criado um project com os arquivos de um projeto java com o arquivo .gitlab-ci.yml
+ao fazer push nesse projeto, o build é executado usando o runner que está na VM ubuntu do virtual box
+ao acessar localhost:888/hello-world é exibido o projeto no PC real
+
+
+
+---------------------
+
+GITLAB REGISTRY: armazenamento de imagens Docker que o gitlab possui
+
+
+
+
+
+
