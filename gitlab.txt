@@ -51,7 +51,7 @@ no gitlab foi criado um grupo o nome sendo a minha matrícula
 depois foi criado um runner no gitlab
 
 é preciso registrar o runner na VM local:
-gitlab-runner register  --url https://gitlab.com  --token glrt-x-pIN_XvPSkaY6WlQAC-B2c6MXdsd3p2Cm86MQp0OjIKdTpocHR1dBg.01.1j17pqoyo
+gitlab-runner register  --url https://gitlab.com  --token [token]
 definir o tipo como shell
 
 rodar: sudo usermod -aG docker gitlab-runner. isso faz com que o gitlab-runner possa rodar o comando docker
@@ -68,6 +68,7 @@ ao acessar localhost:888/hello-world é exibido o projeto no PC real
 ---------------------
 
 GITLAB REGISTRY: armazenamento de imagens Docker que o gitlab possui
+
 
 
 
