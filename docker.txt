@@ -93,6 +93,70 @@ WORKDIR - Responsá́vel por mudar do diretório raiz para o específico nele
 
 
 
+
+REDES DOCKER:
+- None: Sem rede. O container não tem acesso à rede nenhuma
+
+- host: O contêiner não foi colocado em um novo namespace de rede
+O Docker cria um contêiner no namespace de rede do host (ou seja , não cria um novo namespace de rede)
+Os processos no contêiner têm o mesmo acesso aos recursos de rede que os externos
+os containers acessam a rede do pc real
+Remove o isolamento de rede entre o container e o host. O container usa diretamente a rede do host.
+
+- bridge: O driver de rede padrão; o recipiente está ligado a uma ponte
+Tipo de rede padrão
+Docker configura NAT com bridge como gateway 
+Isso permite que o contêiner acesse a rede externa
+é criado uma ponte entre o pc real e o container, e usado NAT para fazer a tradução
+Rede padrão. Containers nela conseguem se comunicar entre si por IP e nome, mas não são acessíveis de fora sem expor portas.
+
+
+
+
+DOCKER SWARM: orquestrador de containers, criado para gerenciar vários containers e servidores (hosts) como se fossem um só cluster.
+- Executa containers em múltiplas máquinas (físicas ou virtuais);
+- Tem alta disponibilidade — se um nó cair, outro assume;
+- Faz deploy, escalonamento e atualizações com poucos comandos;
+- Usa redes seguras e distribuídas entre os nós.
+- O Docker sozinho gerencia containers em um host;
+- O Docker Swarm gerencia containers em vários hosts.
+
+criar: docker stack deploy --compose-file [arquivo docker-compose.yml] [nome da stack]
+* precisa ter as imagens buildadas já ao rodar o comando acima, caso contrário dá erro, então precisar rodar: "docker build -t [nome da imagem] ." (usar o ponto caso o Dockerfile esteja no diretório atual) e depois, no docker-composse em vez de ter "build: .", precisa ter "image: [nome da imagem]"
+* ao rodar o comando, é criado uma pilha de serviços composta por tudo o que tá dentro do docker-compose.yml passado por parâmetro
+* tudo poderia ser criado usando docker-compose ou com comandos manuais (docker run, docker network create, docker volume reate etc..), a diferença de criar usando swarm é que o swarm monitora todos os serviços, redes, volumes e containers criados e caso algum saia do ar ele tenta levantar denovo automaticamente, permite também rodar vários containers do mesmo serviço mais facilmente etc..
+
+alguns comandos Docker swarm:
+docker service ls: mostra os serviços rodando
+docker service scale [id do serviço]=3: levante 3 containers do mesmo serviço
+
+*caso um container seja encerrado usando docker stop por exemplo, o swarm tenta levantar ele denovo automaticamente, pois foi definido que seriam 3 containers daquele serviço no comando acima
+
+docker service logs [id do serviço]: mostra os logs do serviço, mostra todos os logs de todos os containers juntos
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 docker run [imagem]: cria um container apartir de uma imagem
 docker exec -it [id container]: comando para entrar em um container para executar comandos dentro dele
 docker stop [id container]: para um container
